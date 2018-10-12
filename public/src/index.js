@@ -13,7 +13,7 @@ const requireAuth = (nextState, replace, callback) => {
     const { user: { authenticated } } = store.getState()
     if (!authenticated) {
         replace({
-            pathname: "/login",
+            pathname: "/",
             state: { nextPathname: nextState.location.pathname }
         })
     }
