@@ -1,4 +1,4 @@
-import { FETCH_LOGIN_USER } from "../actions/loginAction";
+import { FETCH_LOGIN_USER } from "../actions/authAction";
 
 const initalState = {
     user: []

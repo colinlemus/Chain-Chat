@@ -3,7 +3,7 @@ var db = require('../models');
 module.exports = (app, passport) => {
     app.post('/api/login',
         passport.authenticate('local-signin', {
-            successRedirect: '/home',
+            successRedirect: '/',
             failureRedirect: '/',
         })
     );

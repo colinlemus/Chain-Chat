@@ -4,6 +4,16 @@ var db = require('../models');
 module.exports = function (passport) {
     var LocalStrategy = require('passport-local').Strategy;
 
+    passport.serializeUser((user, done) => {
+        done(null, user.id);
+    });
+
+    passport.deserializeUser((id, done) => {
+        User.findById(id, (err, user) => {
+            done(err, user);
+        });
+    });
+
     passport.use('local-signin', new LocalStrategy({
         usernameField: 'username',
         passwordField: 'password',
@@ -26,15 +36,11 @@ module.exports = function (passport) {
                     });
                 }
 
-                // if (!isValidPassword(user.password, password)) {
-                // if (user.password !== password) {
-                //     return done(null, false, {
-                //         message: 'Incorrect password.'
-                //     });
-                // }
-                // }
-
-                console.log(user);
+                if (!isValidPassword(user.password, password)) {
+                    return done(null, false, {
+                        message: 'Incorrect password.'
+                    });
+                }
 
                 var userinfo = user.get();
                 return done(null, userinfo);
@@ -45,14 +51,4 @@ module.exports = function (passport) {
             });
         }
     ));
-
-    passport.serializeUser((user, done) => {
-        done(null, user.id);
-    });
-
-    passport.deserializeUser((id, done) => {
-        User.findById(id, (err, user) => {
-            done(err, user);
-        });
-    });
 }
