@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 
 app.use(
     session({
-        secret: 'keyboard cat', resave: true, saveUninitialized: true
+        secret: 'RiXKCMZPqu4ThyqYUuONSQ2lRIkTesMDaHZ6VX0LGW', resave: true, saveUninitialized: true
     })
 );
 
@@ -24,10 +24,10 @@ app.use('/static', express.static(path.join(__dirname, 'public/build/static')));
 
 require('./routes/api-routes.js')(app);
 require('./routes/auth-routes.js')(app, passport);
-require('./config/passports.js')(passport);
+require('./config/passports.js')(passport, database);
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../', 'public', 'build', 'index.html'));
+app.use((req, res, next) => {
+    res.sendFile(path.join(__dirname, 'public', 'build', 'index.html'));
 });
 
 database.sequelize.sync().then(() => {

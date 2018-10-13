@@ -1,7 +1,6 @@
 var bCrypt = require('bcrypt-nodejs');
-var db = require('../models');
 
-module.exports = function (passport) {
+module.exports = (passport, db) => {
     var LocalStrategy = require('passport-local').Strategy;
 
     passport.serializeUser((user, done) => {
@@ -15,9 +14,8 @@ module.exports = function (passport) {
     });
 
     passport.use('local-signin', new LocalStrategy({
-        usernameField: 'username',
         passwordField: 'password',
-        passReqToCallback: true
+        passReqToCallback: true,
     },
 
         (req, username, password, done) => {
@@ -29,22 +27,22 @@ module.exports = function (passport) {
                 where: {
                     username: username
                 }
-            }).then((user) => {
-                if (!user) {
+            }).then(user => {
+                if (user.length === 0) {
                     return done(null, false, {
                         message: 'Username does not exist.'
                     });
                 }
 
-                if (!isValidPassword(user.password, password)) {
-                    return done(null, false, {
-                        message: 'Incorrect password.'
-                    });
-                }
+                // if (!isValidPassword(user.password, password)) {
+                //     return done(null, false, {
+                //         message: 'Incorrect password.'
+                //     });
+                // }
 
-                var userinfo = user.get();
-                return done(null, userinfo);
-            }).catch((err) => {
+                return done(null, user);
+            }).catch(err => {
+                console.log(err);
                 return done(null, false, {
                     message: 'Something went wrong with your sign in.'
                 });
