@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import Home from './components/Home';
+import Signup from './components/Signup';
 import Event404 from './components/Event404';
 import * as serviceWorker from './serviceWorker';
 import { store } from './store';
@@ -25,7 +25,7 @@ ReactDOM.render(
         <BrowserRouter>
             <Switch>
                 <Route exact path='/' component={App} />
-                <Route exact path='/home' component={Home} onEnter={requireAuth}/>
+                <Route exact path='/signup' component={Signup} onEnter={requireAuth}/>
                 <Route path='*' component={Event404} />
             </Switch>
         </BrowserRouter>
