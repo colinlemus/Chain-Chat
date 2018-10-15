@@ -25,7 +25,7 @@ ReactDOM.render(
         <BrowserRouter>
             <Switch>
                 <Route exact path='/' component={App} />
-                <Route exact path='/signup' component={Signup} onEnter={requireAuth}/>
+                <Route exact path='/signup' component={Signup}/>
                 <Route path='*' component={Event404} />
             </Switch>
         </BrowserRouter>

@@ -39,7 +39,7 @@ module.exports = function (sequelize, DataTypes) {
                 len: [1, 255],
             }
         },
-        
+
         lastName: {
             type: DataTypes.STRING,
             allowNull: false,

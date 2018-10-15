@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchLogin } from '../redux/actions/authAction';
 
@@ -52,6 +53,7 @@ class Login extends Component {
                                     </form>
                                 </div>
                             </div>
+                            <Link to='/signup'>Sign up</Link>
                             <div>
                                 Username: {this.props.user.username}
                             </div>

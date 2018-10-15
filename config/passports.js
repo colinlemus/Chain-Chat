@@ -8,7 +8,7 @@ module.exports = (passport, db) => {
     });
 
     passport.deserializeUser((id, done) => {
-        User.findById(id, (err, user) => {
+        db.users.findById(id, (err, user) => {
             done(err, user);
         });
     });
@@ -19,8 +19,8 @@ module.exports = (passport, db) => {
     },
 
         (req, username, password, done) => {
-            var isValidPassword = (userpass, password) => {
-                return bCrypt.compareSync(userpass, password);
+            var verfiyPassword = (entredLoginPassword, userPassword) => {
+                return bCrypt.compareSync(entredLoginPassword, userPassword);
             }
 
             db.users.findAll({
@@ -28,37 +28,37 @@ module.exports = (passport, db) => {
                     username: username
                 }
             })
-            .then(user => {
-                if (user.length === 0) {
-                    return done(null, false, {
-                        message: 'Username does not exist.'
-                    });
-                }
-                
-                // if (!isValidPassword(user.password, password)) {
-                //     return done(null, false, {
-                //         message: 'Incorrect password.'
-                //     });
-                // }
+                .then(user => {
+                    if (user.length === 0) {
+                        return done(null, false, {
+                            message: 'Username or password is incorrect.'
+                        });
+                    }
 
-                return done(null, user);
-            }).catch(err => {
-                console.log(err);
-                return done(null, false, {
-                    message: 'Something went wrong with your sign in.'
+                    if (!verfiyPassword(password, user[0].password)) {
+                        return done(null, false, {
+                            message: 'Username or password is incorrect.'
+                        });
+                    }
+
+                    return done(null, user);
+                }).catch(err => {
+                    console.log(err);
+                    return done(null, false, {
+                        message: 'Error on sign in, please report to the administrators.'
+                    });
                 });
-            });
         }
     ));
 
     passport.use('local-signup', new LocalStrategy({
-            passwordField: 'password',
-            passReqToCallback: true // allows us to pass back the entire request to the callback
-        },
+        passwordField: 'password',
+        passReqToCallback: true
+    },
 
         (req, username, password, done) => {
-            var generateHash = (password) => {
-                return bCrypt.hashSync(password, bCrypt.genSaltSync(8), null);
+            var createHashedPassword = (enteredSignUpPassword) => {
+                return bCrypt.hashSync(enteredSignUpPassword, bCrypt.genSaltSync(12), null);
             };
 
             db.users.findOne({
@@ -66,14 +66,14 @@ module.exports = (passport, db) => {
                     username: username
                 }
             }).then((user) => {
-                console.log(user);
                 if (user) {
                     return done(null, false, { message: 'That username is already taken.' });
                 } else {
-                    var userPassword = generateHash(password);
+                    var generatedHashPassword = createHashedPassword(password);
+
                     var data = {
                         username,
-                        password: userPassword,
+                        password: generatedHashPassword,
                         email: req.body.email,
                         firstName: req.body.firstName,
                         lastName: req.body.lastName
