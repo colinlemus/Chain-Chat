@@ -47,6 +47,12 @@ module.exports = function (sequelize, DataTypes) {
                 len: [1, 255],
             }
         },
+
+        // active: {
+        //     type: DataTypes.BOOLEAN,
+        //     allowNull: false,
+        //     default: false
+        // }
     });
 
     return users;
