@@ -8,9 +8,10 @@ module.exports = (passport, db) => {
     });
 
     passport.deserializeUser((id, done) => {
-        db.users.findById(id, (err, user) => {
-            done(err, user);
-        });
+        db.users.findById(id)
+            .then(users => {
+                done(null, users);
+            });
     });
 
     passport.use('local-signin', new LocalStrategy({
@@ -43,7 +44,6 @@ module.exports = (passport, db) => {
 
                     return done(null, user);
                 }).catch(err => {
-                    console.log(err);
                     return done(null, false, {
                         message: 'Error on sign in, please report to the administrators.'
                     });
