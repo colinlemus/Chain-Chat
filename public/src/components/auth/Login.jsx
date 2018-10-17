@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { fetchLogin } from '../redux/actions/auth/authAction';
+import { fetchLogin } from '../../redux/actions/auth/authAction';
 
 class Login extends Component {
     constructor(props) {
@@ -11,6 +11,7 @@ class Login extends Component {
         this.state = {
             username: '',
             password: '',
+            factorAuth: ''
         }
     }
 
@@ -48,7 +49,10 @@ class Login extends Component {
                                             <input type='text' className='form-control' name='username' placeholder='Username' required='required' value={this.state.username} onChange={this.handleInputChange} />
                                         </div>
                                         <div className='form-group'>
-                                            <input type='text' className='form-control' name='password' placeholder='Password' required='required' value={this.state.password} onChange={this.handleInputChange} />
+                                            <input type='password' className='form-control' name='password' placeholder='Password' required='required' value={this.state.password} onChange={this.handleInputChange} />
+                                        </div>
+                                        <div className='form-group'>
+                                            <input type='text' className='form-control' name='factorAuth' placeholder='2 Factor Authentication' value={this.state.factorAuth} onChange={this.handleInputChange} />
                                         </div>
                                         <div className='form-group'>
                                             <button type='submit' value="Submit" className='btn btn-primary btn-lg btn-block login-btn'>Login</button>
@@ -74,6 +78,9 @@ class Login extends Component {
                             </div>
                             <div>
                                 Last Name: {this.props.user.lastName}
+                            </div>
+                            <div>
+                                2 Factor Auth: {this.props.user.factorAuth}
                             </div>
                         </div>
                     </div>

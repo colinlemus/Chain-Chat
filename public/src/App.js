@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import Login from './components/Login';
-import Signup from './components/Signup';
+import Login from './components/auth/Login';
+import Signup from './components/auth/Signup';
 import Event404 from './components/Event404';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';

@@ -25,6 +25,7 @@ export const initializeSession = () => dispatch => {
     })
         .then(res => res.json())
         .then(sessionData => {
+            console.log(sessionData);
             dispatch({
                 type: FETCH_SESSION_DATA,
                 payload: sessionData[0]
