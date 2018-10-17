@@ -2,12 +2,11 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from './redux/reducers';
 
-const initialState = {};
-
+const initalState = {};
 const middleware = [thunk];
 
 export const store = createStore(
     rootReducer,
-    initialState,
+    initalState,
     applyMiddleware(...middleware)
 );

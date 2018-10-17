@@ -42,6 +42,7 @@ module.exports = (passport, db) => {
                         });
                     }
 
+                    req.session.user = user;
                     return done(null, user);
                 }).catch(err => {
                     return done(null, false, {

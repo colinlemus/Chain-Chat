@@ -30,4 +30,13 @@ module.exports = (app, passport) => {
             failureRedirect: '/signup'
         })
     );
+
+    app.get('/api/session', (req, res) => {
+        console.log(req.session);
+        if (req.session.user) {
+            return res.json(req.session.user)
+        } else {
+            return res.sendStatus(401);
+        }
+    });
 }

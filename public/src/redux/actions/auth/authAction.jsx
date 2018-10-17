@@ -1,4 +1,5 @@
 export const FETCH_LOGIN_USER = 'FETCH_LOGIN_USER';
+export const FETCH_SESSION_DATA = 'FETCH_SESSION_DATA';
 
 export const fetchLogin = (payload) => dispatch => {
     fetch('/api/login', {
@@ -11,10 +12,25 @@ export const fetchLogin = (payload) => dispatch => {
     })
         .then(res => res.json())
         .then(data => {
-            console.log(data.token[0]);
             dispatch({
                 type: FETCH_LOGIN_USER,
                 payload: data.token[0]
             })
         });
+}
+
+export const initializeSession = () => dispatch => {
+    fetch('/api/session', {
+        include: 'credentials'
+    })
+        .then(res => res.json())
+        .then(sessionData => {
+            console.log(sessionData);
+            dispatch({
+                type: FETCH_SESSION_DATA,
+                payload: sessionData[0]
+            })
+        }).catch(err => {
+            console.log(err);
+        })
 }
