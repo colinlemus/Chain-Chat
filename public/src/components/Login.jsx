@@ -10,7 +10,7 @@ class Login extends Component {
 
         this.state = {
             username: '',
-            password: ''
+            password: '',
         }
     }
 
@@ -29,6 +29,9 @@ class Login extends Component {
         }
 
         this.props.fetchLogin(payload);
+        setTimeout(() => {
+            window.location.reload();
+        }, 1000);
     }
 
     render() {
@@ -55,10 +58,22 @@ class Login extends Component {
                             </div>
                             <Link to='/signup'>Sign up</Link>
                             <div>
+                                ID: {this.props.user.id}
+                            </div>
+                            <div>
                                 Username: {this.props.user.username}
                             </div>
                             <div>
                                 Password: {this.props.user.password}
+                            </div>
+                            <div>
+                                Email: {this.props.user.email}
+                            </div>
+                            <div>
+                                First Name: {this.props.user.firstName}
+                            </div>
+                            <div>
+                                Last Name: {this.props.user.lastName}
                             </div>
                         </div>
                     </div>
@@ -74,7 +89,7 @@ Login.prototypes = {
 };
 
 const mapStateToProps = state => ({
-    user: state.user.user
+    user: state.user
 });
 
 export default connect(mapStateToProps, { fetchLogin })(Login);

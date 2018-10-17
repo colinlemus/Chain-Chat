@@ -4,6 +4,8 @@ var database = require('./models');
 var path = require('path');
 var passport = require('passport');
 var session = require('express-session');
+var MySQLStore = require('express-mysql-session')(session);
+var cookieParser = require('cookie-parser');
 
 var app = express();
 var PORT = process.env.port || 8080;
@@ -11,11 +13,29 @@ var PORT = process.env.port || 8080;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use(
-    session({
-        secret: 'RiXKCMZPqu4ThyqYUuONSQ2lRIkTesMDaHZ6VX0LGW', resave: true, saveUninitialized: true
-    })
-);
+app.use(cookieParser());
+
+var sessionStore = new MySQLStore({
+    port: 3306,
+    user: "root",
+    password: null,
+    database: "project3_db",
+    host: "127.0.0.1",
+    clearExpired: true,
+    checkExpirationInterval: 1200,
+    expiration: 600,
+    createDatabaseTable: true,
+    connectionLimit: 1,
+    endConnectionOnClose: true,
+});
+
+app.use(session({
+    key: 'fc7qtAKgfWX9YIFtXv2z',
+    secret: 'eae663310342a3ad3ec26747cac86c2f',
+    store: sessionStore,
+    resave: false,
+    saveUninitialized: false
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());

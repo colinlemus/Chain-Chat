@@ -48,7 +48,7 @@ class Signup extends Component {
                     <div className='col-12'>
                         <div className='text-center'>
                             <div className='card'>
-                                <div className='card-header font-weight-bold'>Login</div>
+                                <div className='card-header font-weight-bold'>Sign up</div>
                                 <div className='card-body'>
                                     <form onSubmit={this.handleSubmit}>
                                         <div className='form-group'>
