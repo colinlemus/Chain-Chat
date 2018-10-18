@@ -1,19 +1,22 @@
 import React from 'react';
-import Username from './Username';
-import Videobox from './Videobox';
 import Chatbox from './Chatbox';
 import Chatinput from './Chatinput';
 import Sendbutton from './Sendbutton';
 
-class Chainchat extends React.Component {
+class Chat extends React.Component {
     constructor(props) {
         super(props);
     }
     render() {
         return (
-            <div></div>
+            <div class="row">
+                <Chatbox />
+            </div>
+            <div class="row">
+                <Chatinput /> <Sendbutton />
+            </div>
         );
     }
 }
 
-export default Chainchat;
+export default Chat;
