@@ -13,7 +13,7 @@ class App extends Component {
     }
 
     requireAuth = (nextState, replace) => {
-        // this.props.initializeSession();
+        
     }
 
     render() {

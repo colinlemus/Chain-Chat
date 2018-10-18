@@ -15,6 +15,24 @@ class Login extends Component {
         }
     }
 
+    componentDidMount = () => {
+        setTimeout(() => {
+            console.log(this.props.user);
+        }, 2000);
+    }
+
+    handleFactorAuth = (factorAuth) => {
+        if (factorAuth) {
+            return (
+                <span>true</span>
+            );
+        }
+
+        return (
+            <span>false</span>
+        );
+    }
+
     handleInputChange = (event) => {
         this.setState({
             [event.target.name]: event.target.value
@@ -80,7 +98,7 @@ class Login extends Component {
                                 Last Name: {this.props.user.lastName}
                             </div>
                             <div>
-                                2 Factor Auth: {this.props.user.factorAuth}
+                                2 Factor Auth: {this.handleFactorAuth(this.props.user.factorAuth)}
                             </div>
                         </div>
                     </div>

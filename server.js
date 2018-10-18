@@ -6,14 +6,39 @@ var passport = require('passport');
 var session = require('express-session');
 var MySQLStore = require('express-mysql-session')(session);
 var cookieParser = require('cookie-parser');
-
 var app = express();
 var PORT = process.env.port || 8080;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
 app.use(cookieParser());
+
+var nodemailer = require('nodemailer');
+
+nodemailer.createTestAccount((err, account) => {
+    let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'meatboiimusic@gmail.com',
+            pass: 'Roflstomp1'
+        }
+    });
+
+    var mailOptions = {
+        from: 'meatboiimusic@gmail.com',
+        to: 'xjomama@gmail.com',
+        subject: 'Hello ✔',
+        text: 'Hello world?',
+        html: '<b>Hello world?</b>'
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            return console.log(error);
+        }
+        console.log('Message sent: %s', info.messageId);
+    });
+});
 
 var sessionStore = new MySQLStore({
     port: 3306,
