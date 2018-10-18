@@ -1,4 +1,9 @@
 var bCrypt = require('bcrypt-nodejs');
+var sendEmail = require('./emailAuth');
+var jwt = require('jsonwebtoken');
+
+var EMAIL_SECRET = '1uK1ELJem9bczpBQ74xk';
+var _ = require('underscore');
 
 module.exports = (passport, db) => {
     var LocalStrategy = require('passport-local').Strategy;
@@ -33,6 +38,12 @@ module.exports = (passport, db) => {
                     if (user.length === 0) {
                         return done(null, false, {
                             message: 'Username or password is incorrect.'
+                        });
+                    }
+
+                    if (!user[0].active) {
+                        return done(null, false, {
+                            message: 'You must verify your account.'
                         });
                     }
 
@@ -77,7 +88,9 @@ module.exports = (passport, db) => {
                         password: generatedHashPassword,
                         email: req.body.email,
                         firstName: req.body.firstName,
-                        lastName: req.body.lastName
+                        lastName: req.body.lastName,
+                        factorAuth: req.body.factorAuth,
+                        active: false
                     };
 
                     db.users.create(data).then((newUser) => {
@@ -86,6 +99,25 @@ module.exports = (passport, db) => {
                         }
 
                         if (newUser) {
+                            try {
+                                var emailToken = jwt.sign(
+                                    {
+                                        newUser: _.pick(newUser, 'id'),
+
+                                    },
+                                    EMAIL_SECRET, { expiresIn: '1d' }
+                                )
+
+                                var verificationURL = `http://localhost:8080/confirmation/${emailToken}`
+
+                                sendEmail(
+                                    req.body.email,
+                                    'Please verify your email to activate your account.',
+                                    `Verify with this link: <a href='${verificationURL}'>${verificationURL}</a>`);
+                            } catch (err) {
+                                console.log(err);
+                            }
+
                             return done(null, newUser);
                         }
                     });

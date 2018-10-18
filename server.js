@@ -13,39 +13,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-var nodemailer = require('nodemailer');
-
-nodemailer.createTestAccount((err, account) => {
-    let transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: 'meatboiimusic@gmail.com',
-            pass: 'Roflstomp1'
-        }
-    });
-
-    var mailOptions = {
-        from: 'meatboiimusic@gmail.com',
-        to: 'xjomama@gmail.com',
-        subject: 'Hello ✔',
-        text: 'Hello world?',
-        html: '<b>Hello world?</b>'
-    };
-
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            return console.log(error);
-        }
-        console.log('Message sent: %s', info.messageId);
-    });
-});
-
 var sessionStore = new MySQLStore({
     port: 3306,
-    user: "root",
-    password: "root",
-    database: "project3_db",
-    host: "127.0.0.1",
+    user: 'root',
+    password: '',
+    database: 'project3_db',
+    host: '127.0.0.1',
     clearExpired: true,
     checkExpirationInterval: 12000000,
     expiration: 600000,
@@ -75,7 +48,7 @@ app.use((req, res, next) => {
     res.sendFile(path.join(__dirname, 'public', 'build', 'index.html'));
 });
 
-database.sequelize.sync().then(() => {
+database.sequelize.sync({ force: true }).then(() => {
     app.listen(PORT, () => {
         console.log('App listening on PORT ' + PORT);
     });

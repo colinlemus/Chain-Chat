@@ -1,3 +1,8 @@
+var db = require('../models');
+var jwt = require('jsonwebtoken');
+
+var EMAIL_SECRET = '1uK1ELJem9bczpBQ74xk';
+
 module.exports = (app, passport) => {
     app.post('/api/login', (req, res, next) => {
         return passport.authenticate('local-signin', (err, token, userData) => {
@@ -38,5 +43,11 @@ module.exports = (app, passport) => {
         } else {
             return res.sendStatus(401);
         }
+    });
+
+    app.get('/confirmation/:token', (req, res) => {
+        const { newUser: { id } } = jwt.verify(req.params.token, EMAIL_SECRET);
+
+        db.users.update({ active: true }, { where: { id } });
     });
 }

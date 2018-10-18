@@ -28,6 +28,7 @@ class App extends Component {
 
                         return (<Signup />);
                     }} />
+                    <Route path='/confirmation/' />
                     <Route path='*' component={Event404} />
                 </Switch>
             </BrowserRouter>
