@@ -8,15 +8,17 @@ class Chainchat extends React.Component {
     }
     render() {
         return (
-            <div class="row">
-                <h1> Welcome to Chain Chat! </h1>
-            </div>
-            <div class="row">
-                <div class="col-sm-9">
-                    <Videobox />
+            <div class="container">
+                <div class="row">
+                    <h1> Welcome to Chain Chat! </h1>
                 </div>
-                <div class="col-sm-3">
-                    <Chat />
+                <div class="row">
+                    <div class="col-sm-9">
+                        <Videobox />
+                    </div>
+                    <div class="col-sm-3">
+                        <Chat />
+                    </div>
                 </div>
             </div>
         );
