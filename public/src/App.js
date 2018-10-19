@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { initializeSession } from './redux/actions/auth/authAction';
+import ForgotPassword from './components/auth/ForgotPassword';
 
 class App extends Component {
     componentWillMount = () => {
@@ -13,7 +14,7 @@ class App extends Component {
     }
 
     requireAuth = (nextState, replace) => {
-        // this.props.initializeSession();
+
     }
 
     render() {
@@ -28,6 +29,14 @@ class App extends Component {
 
                         return (<Signup />);
                     }} />
+                    <Route exact path="/forgot" render={() => {
+                        if (this.requireAuth()) {
+                            return (<Redirect to='/' />);
+                        }
+
+                        return (<ForgotPassword />);
+                    }} />
+                    <Route path='/confirmation/' />
                     <Route path='*' component={Event404} />
                 </Switch>
             </BrowserRouter>

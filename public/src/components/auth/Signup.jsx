@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 class Signup extends Component {
     constructor(props) {
@@ -10,7 +11,8 @@ class Signup extends Component {
             password: '',
             email: '',
             firstName: '',
-            lastName: ''
+            lastName: '',
+            factorAuth: ''
         }
     }
 
@@ -28,15 +30,15 @@ class Signup extends Component {
             lastName: this.state.lastName,
             email: this.state.email,
             username: this.state.username,
-            password: this.state.password
+            password: this.state.password,
+            factorAuth: this.state.factorAuth
         }
 
-        console.log(payload);
         axios.post('/api/signup/', payload)
             .then((response) => {
                 console.log(response);
                 this.props.history.push('/');
-            }).catch(function (error) {
+            }).catch((error) => {
                 console.log(error);
             });
     }
@@ -67,8 +69,16 @@ class Signup extends Component {
                                             <input type='text' className='form-control' name='lastName' placeholder='Last Name' required='required' value={this.state.lastName} onChange={this.handleInputChange} />
                                         </div>
                                         <div className='form-group'>
-                                            <button type='submit' value="Submit" className='btn btn-primary btn-lg btn-block'>Signup</button>
+                                            Please select whether you would like to enable 2 Factor Authentication.
+                                            <select name="factorAuth" value={this.state.factorAuth} onChange={this.handleInputChange}>
+                                                <option value="true">True</option>
+                                                <option value="false">False</option>
+                                            </select>
                                         </div>
+                                        <div className='form-group'>
+                                            <button type='submit' value="Submit" className='btn btn-primary btn-lg btn-block'>Sign up</button>
+                                        </div>
+                                        <Link to='/'>Login</Link>
                                     </form>
                                 </div>
                             </div>
