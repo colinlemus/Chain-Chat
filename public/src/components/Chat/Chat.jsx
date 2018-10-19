@@ -14,7 +14,8 @@ class Chat extends React.Component {
                     <Chatbox />
                 </div>
                 <div class="row">
-                    <Chatinput /> <Sendbutton />
+                    <Chatinput /> 
+                    <Sendbutton />
                 </div>
             </div>
         );
