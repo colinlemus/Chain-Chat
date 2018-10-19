@@ -34,12 +34,11 @@ class Signup extends Component {
             factorAuth: this.state.factorAuth
         }
 
-        console.log(payload);
         axios.post('/api/signup/', payload)
             .then((response) => {
                 console.log(response);
                 this.props.history.push('/');
-            }).catch(function (error) {
+            }).catch((error) => {
                 console.log(error);
             });
     }

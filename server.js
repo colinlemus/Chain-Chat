@@ -42,13 +42,13 @@ app.use('/static', express.static(path.join(__dirname, 'public/build/static')));
 
 require('./routes/api-routes.js')(app);
 require('./routes/auth-routes.js')(app, passport);
-require('./config/passports.js')(passport, database);
+require('./config/passport.js')(passport, database);
 
 app.use((req, res, next) => {
     res.sendFile(path.join(__dirname, 'public', 'build', 'index.html'));
 });
 
-database.sequelize.sync({ force: true }).then(() => {
+database.sequelize.sync().then(() => {
     app.listen(PORT, () => {
         console.log('App listening on PORT ' + PORT);
     });

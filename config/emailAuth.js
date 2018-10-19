@@ -8,8 +8,8 @@ module.exports = (userEmail, subject, html) => {
             user: "noreplychainchat@gmail.com",
             clientId: "725763872347-ho0tqurkggl4on5f41b4tmfvjk0kbe7h.apps.googleusercontent.com",
             clientSecret: "Cb3KP1nhAWoLhPLDceXXinpQ",
-            refreshToken: "1/pH0Wimo2ovtLZ1_R6Q2L8mkTH83QwehFOU3ufDvqyxc",
-            accessToken: 'ya29.Gls6BgThUvqrYmdEjLs5DRO8WoOKXpU7xdcfg8p_Irz7rhi8ifoRXM2B_Jf8u4pcl2is5pNN7E3ZmC5i8YXZWDciaMGOLdy1yJ6B79Zenvxns9dao8DUAiKg-17B'
+            refreshToken: "1/NLxUjeIsdZtl4IpeivkuveqoqJZC46YuQ6Gp0O7UrWY0vkIpjokpwvzWK86mMehf",
+            accessToken: 'ya29.Gls6BsCZbnB4YLSvhZQjoCH8dg_9Mzl2sA890pe5_C1SDMm1TrcykZBWSpUrGlNrdAxmgCdLMmkoXB-ZM2-P37ssTAkqUQs4yxG3O569VFlObfv1nFwjuTJEaypE'
         }
     });
 

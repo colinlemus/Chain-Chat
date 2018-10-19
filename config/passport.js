@@ -125,4 +125,56 @@ module.exports = (passport, db) => {
             });
         }
     ));
+
+    passport.use('local-forgot', new LocalStrategy({
+        passwordField: 'password',
+        passReqToCallback: true,
+    },
+
+        (req, username, password, done) => {
+            db.users.findOne({
+                where: {
+                    username: username
+                }
+            })
+                .then(user => {
+                    if (user.length === 0) {
+                        return done(null, false, {
+                            message: 'That user does not exist.'
+                        });
+                    }
+
+                    var createHashedPassword = (enteredSignUpPassword) => {
+                        return bCrypt.hashSync(enteredSignUpPassword, bCrypt.genSaltSync(12), null);
+                    };
+
+                    var generatedHashPassword = createHashedPassword(password);
+
+                    try {
+                        var emailToken = jwt.sign(
+                            {
+                                user: _.pick(user, 'id'),
+                                generatedHashPassword
+                            },
+                            EMAIL_SECRET, { expiresIn: '10m' }
+                        )
+
+                        var changeURL = `http://localhost:8080/forgot/${emailToken}`
+
+                        sendEmail(
+                            user.dataValues.email,
+                            'Please use this link to change your account password.',
+                            `Change with this link: <a href='${changeURL}'>${changeURL}</a>`);
+                    } catch (err) {
+                        console.log(err);
+                    }
+
+                    return done(null, user);
+                }).catch(err => {
+                    return done(null, false, {
+                        message: 'Error on sign in, please report to the administrators.'
+                    });
+                });
+        }
+    ));
 }

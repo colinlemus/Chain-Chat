@@ -79,6 +79,7 @@ class Login extends Component {
                                 </div>
                             </div>
                             <Link to='/signup'>Sign up</Link>
+                            <Link to='/forgot'>Forgot Password</Link>
                             <div>
                                 ID: {this.props.user.id}
                             </div>

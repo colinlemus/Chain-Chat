@@ -46,8 +46,66 @@ module.exports = (app, passport) => {
     });
 
     app.get('/confirmation/:token', (req, res) => {
-        const { newUser: { id } } = jwt.verify(req.params.token, EMAIL_SECRET);
+        var { newUser: { id } } = jwt.verify(req.params.token, EMAIL_SECRET);
 
         db.users.update({ active: true }, { where: { id } });
     });
+
+    app.post('/api/forgot', (req, res, next) => {
+        return passport.authenticate('local-forgot', (err, token, userData) => {
+            if (err) {
+                if (err.name === 'IncorrectCredentialsError') {
+                    return res.status(400).json({
+                        success: false,
+                        message: err.message
+                    });
+                }
+
+                return res.status(400).json({
+                    success: false,
+                    message: 'Could not process the form.'
+                });
+            }
+
+            return res.json({
+                success: true,
+                message: 'User has been found.',
+                token,
+                user: userData
+            });
+        })(req, res, next);
+    });
+
+    app.get('/forgot/:token', (req, res) => {
+        var { user: { id }, generatedHashPassword } = jwt.verify(req.params.token, EMAIL_SECRET);
+        console.log(generatedHashPassword);
+
+        db.users.update({ password: generatedHashPassword }, { where: { id } });
+    });
+
+    app.post('/api/factorAuth', (req, res, next) => {
+        return passport.authenticate('local-factor', (err, token, userData) => {
+            if (err) {
+                if (err.name === 'IncorrectCredentialsError') {
+                    return res.status(400).json({
+                        success: false,
+                        message: err.message
+                    });
+                }
+
+                return res.status(400).json({
+                    success: false,
+                    message: 'Could not process the form.'
+                });
+            }
+
+            return res.json({
+                success: true,
+                message: 'User has been found.',
+                token,
+                user: userData
+            });
+        })(req, res, next);
+    });
+
 }
