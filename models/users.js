@@ -11,7 +11,7 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                len: [1, 10],
+                // len: [1, 10],
             }
         },
 
@@ -48,11 +48,17 @@ module.exports = function (sequelize, DataTypes) {
             }
         },
 
-        // active: {
-        //     type: DataTypes.BOOLEAN,
-        //     allowNull: false,
-        //     default: false
-        // }
+        factorAuth: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        },
+
+        active: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        }
     });
 
     return users;

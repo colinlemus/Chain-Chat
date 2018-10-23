@@ -4,7 +4,7 @@ export default class Event404 extends Component {
     render() {
         return (
             <div>
-                yeet
+                404
             </div>
         )
     }

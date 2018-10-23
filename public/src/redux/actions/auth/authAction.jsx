@@ -1,4 +1,6 @@
 export const FETCH_LOGIN_USER = 'FETCH_LOGIN_USER';
+export const FETCH_SESSION_DATA = 'FETCH_SESSION_DATA';
+export const FETCH_FORGOT_SESSION = 'FETCH_FORGOT_SESSION';
 
 export const fetchLogin = (payload) => dispatch => {
     fetch('/api/login', {
@@ -11,10 +13,41 @@ export const fetchLogin = (payload) => dispatch => {
     })
         .then(res => res.json())
         .then(data => {
-            console.log(data.token[0]);
             dispatch({
                 type: FETCH_LOGIN_USER,
                 payload: data.token[0]
             })
+        }).catch(err => {
+            console.log(err);
         });
+}
+
+export const initializeSession = () => dispatch => {
+    fetch('/api/session', {
+        include: 'credentials'
+    })
+        .then(res => res.json())
+        .then(sessionData => {
+            dispatch({
+                type: FETCH_SESSION_DATA,
+                payload: sessionData
+            })
+        }).catch(err => {
+            console.log(err);
+        })
+}
+
+export const initializeForgotSession = () => dispatch => {
+    fetch('/api/session', {
+        include: 'credentials'
+    })
+        .then(res => res.json())
+        .then(sessionData => {
+            dispatch({
+                type: FETCH_FORGOT_SESSION,
+                payload: sessionData
+            })
+        }).catch(err => {
+            console.log(err);
+        })
 }
