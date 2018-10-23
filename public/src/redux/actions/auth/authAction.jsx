@@ -28,7 +28,7 @@ export const initializeSession = () => dispatch => {
         .then(sessionData => {
             dispatch({
                 type: FETCH_SESSION_DATA,
-                payload: sessionData[0]
+                payload: sessionData
             })
         }).catch(err => {
             console.log(err);
@@ -43,7 +43,7 @@ export const initializeForgotSession = () => dispatch => {
         .then(sessionData => {
             dispatch({
                 type: FETCH_FORGOT_SESSION,
-                payload: sessionData[0]
+                payload: sessionData
             })
         }).catch(err => {
             console.log(err);

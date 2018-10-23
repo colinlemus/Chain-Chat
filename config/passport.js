@@ -29,25 +29,26 @@ module.exports = (passport, db) => {
                 return bCrypt.compareSync(entredLoginPassword, userPassword);
             }
 
-            db.users.findAll({
+            db.users.findOne({
                 where: {
                     username
                 }
             })
                 .then(user => {
+                    console.log(user);
                     if (user.length === 0) {
                         return done(null, false, {
                             message: 'Username or password is incorrect.'
                         });
                     }
 
-                    if (!user[0].active) {
+                    if (!user.active) {
                         return done(null, false, {
                             message: 'You must verify your account.'
                         });
                     }
 
-                    if (!verfiyPassword(password, user[0].password)) {
+                    if (!verfiyPassword(password, user.password)) {
                         return done(null, false, {
                             message: 'Username or password is incorrect.'
                         });
@@ -103,7 +104,6 @@ module.exports = (passport, db) => {
                                 var emailToken = jwt.sign(
                                     {
                                         newUser: _.pick(newUser, 'id'),
-
                                     },
                                     EMAIL_SECRET, { expiresIn: '1d' }
                                 )
@@ -145,15 +145,15 @@ module.exports = (passport, db) => {
                     }
 
                     try {
-                        console.log(user.dataValues.username);
                         var emailToken = jwt.sign(
                             {
-                                username: user.dataValues.username
+                                user: _.pick(user, 'username'),
                             },
-                            EMAIL_SECRET, { expiresIn: '5m' }
+                            EMAIL_SECRET, { expiresIn: '3m' }
                         )
 
-                        var changeURL = `http://localhost:3000/forgot/${emailToken}`
+                        var changeURL = `http://localhost:8080/forgot/${emailToken}`
+                        console.log(user.dataValues.email);
 
                         sendEmail(
                             user.dataValues.email,

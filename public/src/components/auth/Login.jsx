@@ -54,6 +54,10 @@ class Login extends Component {
     }
 
     render() {
+        if(!this.props.user) {
+            return '';
+        }
+
         return (
             <div className='container'>
                 <div className='row'>
@@ -119,7 +123,7 @@ Login.prototypes = {
 };
 
 const mapStateToProps = state => ({
-    user: state.user
+    user: state.hasOwnProperty('user') ? state.user : null
 });
 
 export default connect(mapStateToProps, { fetchLogin })(Login);

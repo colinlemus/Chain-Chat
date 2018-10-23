@@ -1,6 +1,7 @@
 var db = require('../models');
 var jwt = require('jsonwebtoken');
 var bCrypt = require('bcrypt-nodejs');
+var path = require('path');
 
 var EMAIL_SECRET = '1uK1ELJem9bczpBQ74xk';
 
@@ -86,28 +87,42 @@ module.exports = (app, passport) => {
 
         db.users.findOne({
             where: {
-                username: req.session.user[0].username
+                username: req.session.user.username
             }
         }).then(user => {
-            db.users.update({ password: generatedHashPassword }, { where: { id: user.id } });
-
-            req.session.destroy();
-            req.session.user = user;
-            req.session.save();
+            db.users.update({ password: generatedHashPassword }, { where: { id: user.id } })
+            req.session.user = {
+                id: user.id,
+                username: user.username,
+                password: user.password,
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                factorAuth: user.factorAuth,
+                active: user.active
+            };
+            console.log(req.session.user);
+            req.session.save((err) => {
+                if(err) {
+                    console.log(err);
+                }
+                console.log(req.session.user);
+                return res.redirect('../');
+            });
         });
     });
 
 
     app.get('/forgot/:token', (req, res) => {
-        var { user: { username } } = jwt.verify(req.params.token, EMAIL_SECRET);
+        var { user } = jwt.verify(req.params.token, EMAIL_SECRET);
 
-        req.session.destroy();
-        req.session.user = {
-            username
-        }
-        req.session.save();
-
-        res.sendFile(path.join(__dirname, 'public', 'build', 'index.html'));
+        req.session.user = user;
+        req.session.save((err) => {
+            console.log(err);
+            console.log(req.session.user);
+            console.log('saved');
+            return res.redirect('../change');
+        });
     });
 
     app.post('/api/factorAuth', (req, res, next) => {
