@@ -25,7 +25,7 @@ class Signup extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
 
-        var payload = {
+        const payload = {
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             email: this.state.email,
@@ -35,10 +35,7 @@ class Signup extends Component {
         }
 
         axios.post('/api/signup/', payload)
-            .then((response) => {
-                console.log(response);
-                this.props.history.push('/');
-            }).catch((error) => {
+            .catch((error) => {
                 console.log(error);
             });
     }

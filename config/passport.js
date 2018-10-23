@@ -29,25 +29,26 @@ module.exports = (passport, db) => {
                 return bCrypt.compareSync(entredLoginPassword, userPassword);
             }
 
-            db.users.findAll({
+            db.users.findOne({
                 where: {
-                    username: username
+                    username
                 }
             })
                 .then(user => {
+                    console.log(user);
                     if (user.length === 0) {
                         return done(null, false, {
                             message: 'Username or password is incorrect.'
                         });
                     }
 
-                    if (!user[0].active) {
+                    if (!user.active) {
                         return done(null, false, {
                             message: 'You must verify your account.'
                         });
                     }
 
-                    if (!verfiyPassword(password, user[0].password)) {
+                    if (!verfiyPassword(password, user.password)) {
                         return done(null, false, {
                             message: 'Username or password is incorrect.'
                         });
@@ -75,7 +76,7 @@ module.exports = (passport, db) => {
 
             db.users.findOne({
                 where: {
-                    username: username
+                    username
                 }
             }).then((user) => {
                 if (user) {
@@ -103,7 +104,6 @@ module.exports = (passport, db) => {
                                 var emailToken = jwt.sign(
                                     {
                                         newUser: _.pick(newUser, 'id'),
-
                                     },
                                     EMAIL_SECRET, { expiresIn: '1d' }
                                 )
@@ -128,13 +128,13 @@ module.exports = (passport, db) => {
 
     passport.use('local-forgot', new LocalStrategy({
         passwordField: 'password',
-        passReqToCallback: true,
+        passReqToCallback: true
     },
 
         (req, username, password, done) => {
             db.users.findOne({
                 where: {
-                    username: username
+                    username
                 }
             })
                 .then(user => {
@@ -144,22 +144,16 @@ module.exports = (passport, db) => {
                         });
                     }
 
-                    var createHashedPassword = (enteredSignUpPassword) => {
-                        return bCrypt.hashSync(enteredSignUpPassword, bCrypt.genSaltSync(12), null);
-                    };
-
-                    var generatedHashPassword = createHashedPassword(password);
-
                     try {
                         var emailToken = jwt.sign(
                             {
-                                user: _.pick(user, 'id'),
-                                generatedHashPassword
+                                user: _.pick(user, 'username'),
                             },
-                            EMAIL_SECRET, { expiresIn: '10m' }
+                            EMAIL_SECRET, { expiresIn: '3m' }
                         )
 
                         var changeURL = `http://localhost:8080/forgot/${emailToken}`
+                        console.log(user.dataValues.email);
 
                         sendEmail(
                             user.dataValues.email,

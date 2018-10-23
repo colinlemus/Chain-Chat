@@ -1,5 +1,7 @@
 var db = require('../models');
 var jwt = require('jsonwebtoken');
+var bCrypt = require('bcrypt-nodejs');
+var path = require('path');
 
 var EMAIL_SECRET = '1uK1ELJem9bczpBQ74xk';
 
@@ -37,7 +39,6 @@ module.exports = (app, passport) => {
     );
 
     app.get('/api/session', (req, res) => {
-        console.log(req.session);
         if (req.session.user) {
             return res.json(req.session.user)
         } else {
@@ -76,11 +77,55 @@ module.exports = (app, passport) => {
         })(req, res, next);
     });
 
-    app.get('/forgot/:token', (req, res) => {
-        var { user: { id }, generatedHashPassword } = jwt.verify(req.params.token, EMAIL_SECRET);
-        console.log(generatedHashPassword);
+    app.post('/api/newPass', (req, res, next) => {
+        var createHashedPassword = (enteredSignUpPassword) => {
+            return bCrypt.hashSync(enteredSignUpPassword, bCrypt.genSaltSync(12), null);
+        };
 
-        db.users.update({ password: generatedHashPassword }, { where: { id } });
+        var generatedHashPassword = createHashedPassword(req.body.password);
+
+        db.users.findOne({
+            where: {
+                username: req.session.user.username
+            }
+        }).then(user => {
+            db.users.update({ password: generatedHashPassword }, { where: { id: user.id } });
+
+            req.session.user = {
+                id: user.id,
+                username: user.username,
+                password: user.password,
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                factorAuth: user.factorAuth,
+                active: user.active
+            };
+
+            req.session.save((err) => {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+
+                return res.redirect('../');
+            });
+        });
+    });
+
+
+    app.get('/forgot/:token', (req, res) => {
+        var { user } = jwt.verify(req.params.token, EMAIL_SECRET);
+
+        req.session.user = user;
+        req.session.save((err) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+
+            return res.redirect('../change');
+        });
     });
 
     app.post('/api/factorAuth', (req, res, next) => {

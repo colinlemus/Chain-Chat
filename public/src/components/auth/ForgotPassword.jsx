@@ -8,10 +8,9 @@ export default class ForgotPassword extends Component {
 
         this.state = {
             username: '',
-            newPassword: ''
         }
     }
-    
+
     handleInputChange = (event) => {
         this.setState({
             [event.target.name]: event.target.value
@@ -23,15 +22,11 @@ export default class ForgotPassword extends Component {
 
         const payload = {
             username: this.state.username,
-            password: this.state.newPassword
+            password: this.state.username
         }
 
-        console.log(payload);
-
         axios.post('/api/forgot/', payload)
-            .then((response) => {
-                console.log(response);
-            }).catch((error) => {
+            .catch((error) => {
                 console.log(error);
             });
     }
@@ -50,10 +45,7 @@ export default class ForgotPassword extends Component {
                                             <input type='text' className='form-control' name='username' placeholder='Username' required='required' value={this.state.username} onChange={this.handleInputChange} />
                                         </div>
                                         <div className='form-group'>
-                                            <input type='text' className='form-control' name='newPassword' placeholder='New Password' required='required' value={this.state.newPassword} onChange={this.handleInputChange} />
-                                        </div>
-                                        <div className='form-group'>
-                                            <button type='submit' value="Submit" className='btn btn-primary btn-lg btn-block login-btn'>Reset Password</button>
+                                            <button type='submit' value="Submit" className='btn btn-primary btn-lg btn-block login-btn'>Request Reset</button>
                                         </div>
                                     </form>
                                 </div>
