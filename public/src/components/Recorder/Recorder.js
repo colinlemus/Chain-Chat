@@ -3,10 +3,24 @@ import Listenrec from './Listenrec';
 import Startrec from './Startrec';
 import Endrec from './Endrec';
 import Sendrec from './Sendrec';
+// import { speechToText } from '../../utilities/Speech'
+// import * as record from 'node-record-lpcm16';
+import axios from 'axios';
 
-class Recorder extends React.Component {
+class Recorder extends React.Component { 
+    record=null;
     constructor(props) {
         super(props);
+        this.clickHandler=this.clickHandler.bind(this)
+        
+    }
+    
+    clickHandler () {
+
+        // this.speechToText();
+    }
+    endRecord() {
+        // this.record.stop;
     }
     
     render() {
@@ -14,10 +28,10 @@ class Recorder extends React.Component {
             <div>
                 <div className="row">
                     <div className="col-sm-3">
-                        <Startrec />
+                        <Startrec onClick={this.clickHandler} />
                     </div>
                     <div className="col-sm-3">
-                        <Endrec />
+                        <Endrec onClick={this.endRecord}/>
                     </div>
                     <div className="col-sm-3">
                         <Listenrec />

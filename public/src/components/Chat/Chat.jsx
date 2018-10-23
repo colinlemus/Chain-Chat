@@ -9,11 +9,11 @@ class Chat extends React.Component {
     }
     render() {
         return (
-            <div class="container">
-                <div class="row">
+            <div className="container">
+                <div className="row">
                     <Chatbox />
                 </div>
-                <div class="row">
+                <div className="row">
                     <Chatinput /> 
                     <Sendbutton />
                 </div>
