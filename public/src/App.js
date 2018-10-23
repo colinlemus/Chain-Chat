@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { initializeSession } from './redux/actions/auth/authAction';
 import ForgotPassword from './components/auth/ForgotPassword';
+import ForgotPassword2 from './components/auth/ForgotPassword2';
 
 class App extends Component {
     componentWillMount = () => {
@@ -44,6 +45,7 @@ class App extends Component {
                     {this.createRoute(false, 'exact', '/', Login)}
                     {this.createRoute(false, 'exact', '/register', Signup)}
                     {this.createRoute(false, 'exact', '/forgot', ForgotPassword)}
+                    {this.createRoute(false, 'path', '/forgot', ForgotPassword2)}
                     {this.createRoute(false, 'path', '/confirmation')}
                     {this.createRoute(false, 'path', '*', Event404)}
                 </Switch>

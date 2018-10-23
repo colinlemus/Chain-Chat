@@ -31,7 +31,7 @@ module.exports = (passport, db) => {
 
             db.users.findAll({
                 where: {
-                    username: username
+                    username
                 }
             })
                 .then(user => {
@@ -75,7 +75,7 @@ module.exports = (passport, db) => {
 
             db.users.findOne({
                 where: {
-                    username: username
+                    username
                 }
             }).then((user) => {
                 if (user) {
@@ -128,13 +128,13 @@ module.exports = (passport, db) => {
 
     passport.use('local-forgot', new LocalStrategy({
         passwordField: 'password',
-        passReqToCallback: true,
+        passReqToCallback: true
     },
 
         (req, username, password, done) => {
             db.users.findOne({
                 where: {
-                    username: username
+                    username
                 }
             })
                 .then(user => {
@@ -144,22 +144,16 @@ module.exports = (passport, db) => {
                         });
                     }
 
-                    var createHashedPassword = (enteredSignUpPassword) => {
-                        return bCrypt.hashSync(enteredSignUpPassword, bCrypt.genSaltSync(12), null);
-                    };
-
-                    var generatedHashPassword = createHashedPassword(password);
-
                     try {
+                        console.log(user.dataValues.username);
                         var emailToken = jwt.sign(
                             {
-                                user: _.pick(user, 'id'),
-                                generatedHashPassword
+                                username: user.dataValues.username
                             },
-                            EMAIL_SECRET, { expiresIn: '10m' }
+                            EMAIL_SECRET, { expiresIn: '5m' }
                         )
 
-                        var changeURL = `http://localhost:8080/forgot/${emailToken}`
+                        var changeURL = `http://localhost:3000/forgot/${emailToken}`
 
                         sendEmail(
                             user.dataValues.email,

@@ -1,5 +1,6 @@
 var db = require('../models');
 var jwt = require('jsonwebtoken');
+var bCrypt = require('bcrypt-nodejs');
 
 var EMAIL_SECRET = '1uK1ELJem9bczpBQ74xk';
 
@@ -76,11 +77,37 @@ module.exports = (app, passport) => {
         })(req, res, next);
     });
 
-    app.get('/forgot/:token', (req, res) => {
-        var { user: { id }, generatedHashPassword } = jwt.verify(req.params.token, EMAIL_SECRET);
-        console.log(generatedHashPassword);
+    app.post('/api/newPass', (req, res, next) => {
+        var createHashedPassword = (enteredSignUpPassword) => {
+            return bCrypt.hashSync(enteredSignUpPassword, bCrypt.genSaltSync(12), null);
+        };
 
-        db.users.update({ password: generatedHashPassword }, { where: { id } });
+        var generatedHashPassword = createHashedPassword(req.body.password);
+
+        db.users.findOne({
+            where: {
+                username: req.session.user[0].username
+            }
+        }).then(user => {
+            db.users.update({ password: generatedHashPassword }, { where: { id: user.id } });
+
+            req.session.destroy();
+            req.session.user = user;
+            req.session.save();
+        });
+    });
+
+
+    app.get('/forgot/:token', (req, res) => {
+        var { user: { username } } = jwt.verify(req.params.token, EMAIL_SECRET);
+
+        req.session.destroy();
+        req.session.user = {
+            username
+        }
+        req.session.save();
+
+        res.sendFile(path.join(__dirname, 'public', 'build', 'index.html'));
     });
 
     app.post('/api/factorAuth', (req, res, next) => {
