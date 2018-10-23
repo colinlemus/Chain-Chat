@@ -31,8 +31,8 @@ app.use(session({
     key: 'fc7qtAKgfWX9YIFtXv2z',
     secret: 'eae663310342a3ad3ec26747cac86c2f',
     store: sessionStore,
-    resave: false,
-    saveUninitialized: false
+    resave: true,
+    saveUninitialized: true
 }));
 
 app.use(passport.initialize());
