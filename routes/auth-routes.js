@@ -39,7 +39,6 @@ module.exports = (app, passport) => {
     );
 
     app.get('/api/session', (req, res) => {
-        console.log(req.session);
         if (req.session.user) {
             return res.json(req.session.user)
         } else {
@@ -90,7 +89,8 @@ module.exports = (app, passport) => {
                 username: req.session.user.username
             }
         }).then(user => {
-            db.users.update({ password: generatedHashPassword }, { where: { id: user.id } })
+            db.users.update({ password: generatedHashPassword }, { where: { id: user.id } });
+
             req.session.user = {
                 id: user.id,
                 username: user.username,
@@ -101,12 +101,13 @@ module.exports = (app, passport) => {
                 factorAuth: user.factorAuth,
                 active: user.active
             };
-            console.log(req.session.user);
+
             req.session.save((err) => {
-                if(err) {
+                if (err) {
                     console.log(err);
+                    return;
                 }
-                console.log(req.session.user);
+
                 return res.redirect('../');
             });
         });
@@ -118,9 +119,11 @@ module.exports = (app, passport) => {
 
         req.session.user = user;
         req.session.save((err) => {
-            console.log(err);
-            console.log(req.session.user);
-            console.log('saved');
+            if (err) {
+                console.log(err);
+                return;
+            }
+
             return res.redirect('../change');
         });
     });

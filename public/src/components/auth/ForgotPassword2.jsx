@@ -37,12 +37,8 @@ class ForgotPassword extends Component {
             password: this.state.newPassword,
         }
 
-        console.log(payload);
-
         axios.post('/api/newPass/', payload)
-            .then((response) => {
-                console.log(response);
-            }).catch((error) => {
+            .catch((error) => {
                 console.log(error);
             });
     }

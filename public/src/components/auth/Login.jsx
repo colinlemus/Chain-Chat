@@ -15,12 +15,6 @@ class Login extends Component {
         }
     }
 
-    componentDidMount = () => {
-        setTimeout(() => {
-            console.log(this.props.user);
-        }, 2000);
-    }
-
     handleFactorAuth = (factorAuth) => {
         if (factorAuth) {
             return (
@@ -54,10 +48,6 @@ class Login extends Component {
     }
 
     render() {
-        if(!this.props.user) {
-            return '';
-        }
-
         return (
             <div className='container'>
                 <div className='row'>
@@ -123,7 +113,7 @@ Login.prototypes = {
 };
 
 const mapStateToProps = state => ({
-    user: state.hasOwnProperty('user') ? state.user : null
+    user: state.user
 });
 
 export default connect(mapStateToProps, { fetchLogin })(Login);
