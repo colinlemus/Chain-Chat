@@ -7,7 +7,11 @@ import { connect } from 'react-redux';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { initializeSession, initializeForgotSession } from './redux/actions/auth/authAction';
 import ForgotPassword from './components/auth/ForgotPassword';
+<<<<<<< Updated upstream
 import ForgotPassword2 from './components/auth/ForgotPassword2';
+=======
+import Chainchat from './components/Chainchat/Chainchat';
+>>>>>>> Stashed changes
 
 class App extends Component {
     componentWillMount = () => {
@@ -43,6 +47,7 @@ class App extends Component {
         return (
             <BrowserRouter>
                 <Switch>
+<<<<<<< Updated upstream
                     {this.createRoute(false, 'exact', '/', Login)}
                     {this.createRoute(false, 'exact', '/register', Signup)}
                     {this.createRoute(false, 'exact', '/forgot', ForgotPassword)}
@@ -50,6 +55,26 @@ class App extends Component {
                     {this.createRoute(false, 'path', '/forgot')}
                     {this.createRoute(false, 'path', '/confirmation')}
                     {this.createRoute(false, 'path', '*', Event404)}
+=======
+                    {/* <Route exact path='/' component={Login} />
+                    <Route exact path="/signup" render={() => {
+                        if (this.requireAuth()) {
+                            return (<Redirect to='/' />);
+                        }
+
+                        return (<Signup />);
+                    }} />
+                    <Route exact path="/forgot" render={() => {
+                        if (this.requireAuth()) {
+                            return (<Redirect to='/' />);
+                        }
+
+                        return (<ForgotPassword />);
+                    }} /> */}
+                    {/* <Route path='/confirmation/' />
+                    <Route path='*' component={Event404} /> */}
+                    <Route path='/chainchat' component={Chainchat} />
+>>>>>>> Stashed changes
                 </Switch>
             </BrowserRouter>
         )
