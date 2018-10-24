@@ -5,6 +5,7 @@ node_modules
 
 # config
 config/config.json
+config/GoogleAPI.json
 
 # testing
 /coverage

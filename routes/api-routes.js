@@ -1,21 +1,18 @@
+// process.env.GOOGLE_APPLICATION_CREDENTIALS = 'config/GoogleAPI Trans.json';
+process.env.GOOGLE_APPLICATION_CREDENTIALS = 'config/GoogleAPI STT.json';
 const db = require('../models');
 const fs = require('fs');
 const record = require('node-record-lpcm16');
-process.env.GOOGLE_APPLICATION_CREDENTIALS = "/Users/steveszumski/Desktop/code/JSONKeys/UCLA Bootcamp Project 3-3ebb983f55a2.json"
-// Imports the Google Cloud client library
 const speech = require('@google-cloud/speech');
+const { Translate } = require('@google-cloud/translate');
+const projectId = 'constant-gecko-219921';
+const translate = new Translate({
+    projectId,
+});
 
-translateInput = (textInput, language) => {
-    // translate the textInput into whatever language
-}
 
 module.exports = app => {
-
-
     app.post('/api/record', (req, res, next) => {
-        console.log("Recording API")
-        // speechToText = () => {
-        // Creates a client
         const client = new speech.SpeechClient();
         const encoding = 'LINEAR16';
         const sampleRateHertz = 16000;
@@ -28,26 +25,41 @@ module.exports = app => {
                 sampleRateHertz: sampleRateHertz,
                 languageCode: languageCode,
             },
-            interimResults: false, // If you want interim results, set this to true
+            interimResults: false,
         };
 
-        // Create a recognize stream
+        const convertLanguage = (text, target) => {
+            translate
+                .translate(text, target)
+                .then(results => {
+                    const translation = results[0];
+                    return translation;
+                })
+                .catch(err => {
+                    console.error('ERROR:', err);
+                });
+        }
+
         const recognizeStream = client
             .streamingRecognize(request)
             .on('error', console.error)
-            .on('data', data =>
-                process.stdout.write(
-                    data.results[0] && data.results[0].alternatives[0]
-                        ? `Transcription: ${data.results[0].alternatives[0].transcript}\n`
-                        : `\n\nReached transcription time limit, press Ctrl+C\n`
+            .on('data', data => {
+                translate
+                    .translate(data.results[0].alternatives[0].transcript, 'es')
+                    .then(results => {
+                        const translation = results[0];
 
+                        process.stdout.write(
+                            data.results[0] && data.results[0].alternatives[0]
+                                ? `Transcription: ${translation}\n`
+                                : `\n\nReached transcription time limit, press Ctrl+C\n`
+                        )
+                    })
+                    .catch(err => {
+                        console.error('ERROR:', err);
+                    });
+            });
 
-                )
-
-            );
-
-
-        // Start recording and send the microphone input to the Speech API
         record
             .start({
                 sampleRateHertz: sampleRateHertz,
@@ -61,13 +73,11 @@ module.exports = app => {
             .pipe(recognizeStream);
 
         console.log('Listening, press Ctrl+C to stop.');
-        // send captured speech to translate service here
-        // this.translateInput(theCaputuredInput, whateverLanguageTheUserChooses)
         return res.json();
     })
 
     // app.post('/api/messageTranslate', (req, res, next) => {
-    // this.translateInput(req, whateverLanguageTheUserChooses)
+    // this.convertLanguage(req, whateverLanguageTheUserChooses)
     // })
 
 };
