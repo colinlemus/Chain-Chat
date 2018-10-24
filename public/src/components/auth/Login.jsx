@@ -15,12 +15,6 @@ class Login extends Component {
         }
     }
 
-    componentDidMount = () => {
-        setTimeout(() => {
-            console.log(this.props.user);
-        }, 2000);
-    }
-
     handleFactorAuth = (factorAuth) => {
         if (factorAuth) {
             return (

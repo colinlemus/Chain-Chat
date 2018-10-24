@@ -7,7 +7,9 @@ class Endcallbutton extends React.Component {
     }
     render() {
         return (
-            <div></div>
+            <div>
+                <button className="primary"> Send</button>
+            </div>
         );
     }
 }
