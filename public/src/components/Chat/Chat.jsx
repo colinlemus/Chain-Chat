@@ -9,13 +9,19 @@ class Chat extends React.Component {
     }
     render() {
         return (
-            <div className="container">
-                <div className="row">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
                     <Chatbox />
+                    </div>
                 </div>
-                <div className="row">
+                <div class="row">
+                    <div class="col-sm-10">
                     <Chatinput /> 
+                    </div>
+                    <div class="col-sm-2">
                     <Sendbutton />
+                    </div>
                 </div>
             </div>
         );
