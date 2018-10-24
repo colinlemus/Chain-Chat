@@ -1,15 +1,32 @@
 import React from 'react';
-import Icon from '@material-ui/icons';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Send from '@material-ui/icons/Send';
 
-class Sendbutton extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-    render() {
-        return (
-            <div></div>
-        );
-    }
-}
+const styles = theme => ({
+    button: {
+      margin: theme.spacing.unit,
+    },
+    extendedIcon: {
+      marginRight: theme.spacing.unit,
+    },
+});
+  
 
-export default Sendbutton;
+function Sendbutton(props) {
+    const { classes } = props;
+    return (
+      <div>
+        <Button variant="fab" color="primary" aria-label="Send" className={classes.button}>
+          <Send />
+        </Button>
+      </div>
+    );
+  }
+
+Sendbutton.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(Sendbutton);
