@@ -12,6 +12,11 @@ var PORT = process.env.port || 8080;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(cors({
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+    origin: 'http://localhost:3000'
+}));
 
 var sessionStore = new MySQLStore({
     port: 3306,
@@ -48,8 +53,27 @@ app.use((req, res, next) => {
     res.sendFile(path.join(__dirname, 'public', 'build', 'index.html'));
 });
 
+io.on('connection', (socket) => {
+    console.log('a user connected');
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+    })
+});
+
+
+io.on('connection', (socket) => {
+    socket.on('chat message', (msg) => {
+        io.emit('chat message', msg);
+        console.log('message: ' + msg);
+        socket.send('Message: ' + msg);
+    });
+});
+
 database.sequelize.sync().then(() => {
     app.listen(PORT, () => {
         console.log('App listening on PORT ' + PORT);
     });
+
+    io.listen(8081);
+    
 });
