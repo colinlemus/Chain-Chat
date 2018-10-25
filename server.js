@@ -8,6 +8,9 @@ var MySQLStore = require('express-mysql-session')(session);
 var cookieParser = require('cookie-parser');
 var app = express();
 var PORT = process.env.port || 8080;
+var cors = require('cors');
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -60,7 +63,6 @@ io.on('connection', (socket) => {
     })
 });
 
-
 io.on('connection', (socket) => {
     socket.on('chat message', (msg) => {
         io.emit('chat message', msg);
@@ -75,5 +77,4 @@ database.sequelize.sync().then(() => {
     });
 
     io.listen(8081);
-    
 });

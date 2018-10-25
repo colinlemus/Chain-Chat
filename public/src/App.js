@@ -8,6 +8,7 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { initializeSession, initializeForgotSession } from './redux/actions/auth/authAction';
 import ForgotPassword from './components/auth/ForgotPassword';
 import ForgotPassword2 from './components/auth/ForgotPassword2';
+import Chainchat from './components/Chainchat/Chainchat';
 import Test from './components/test/test';
 
 class App extends Component {
@@ -50,6 +51,7 @@ class App extends Component {
                     {this.createRoute(false, 'exact', '/change', ForgotPassword2)}
                     {this.createRoute(false, 'path', '/forgot')}
                     {this.createRoute(false, 'path', '/confirmation')}
+                    {this.createRoute(false, 'exact', '/chainchat', Chainchat)}
                     {this.createRoute(false, 'exact', '/test', Test)}
                     {this.createRoute(false, 'path', '*', Event404)}
                 </Switch>

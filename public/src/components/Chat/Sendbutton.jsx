@@ -6,24 +6,29 @@ import Send from '@material-ui/icons/Send';
 
 const styles = theme => ({
     button: {
-      margin: theme.spacing.unit,
+        margin: theme.spacing.unit,
     },
     extendedIcon: {
-      marginRight: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
     },
 });
-  
+
+// handleOnSubmit = (event) => {
+//     event.preventDefault();
+//     console.log("Submit handler");
+//     socket.emit('chat message', this.state.message);
+// }
 
 function Sendbutton(props) {
     const { classes } = props;
     return (
-      <div>
-        <Button variant="fab" color="primary" aria-label="Send" className={classes.button}>
-          <Send />
-        </Button>
-      </div>
+        <div>
+            <Button variant="fab" color="primary" aria-label="Send" className={classes.button}>
+                <Send />
+            </Button>
+        </div>
     );
-  }
+}
 
 Sendbutton.propTypes = {
     classes: PropTypes.object.isRequired,
