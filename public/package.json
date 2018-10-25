@@ -25,7 +25,8 @@
     "redux-persist-cookie-storage": "^1.0.0",
     "redux-persist-transform-encrypt": "^2.0.1",
     "sequelize": "^4.38.1",
-    "sequelize-cli": "^4.1.1"
+    "sequelize-cli": "^4.1.1",
+    "socket.io-client": "^2.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
