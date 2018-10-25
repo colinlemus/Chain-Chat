@@ -6,13 +6,28 @@ import Sendrec from './Sendrec';
 // import { speechToText } from '../../utilities/Speech'
 // import * as record from 'node-record-lpcm16';
 import axios from 'axios';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Mic from '@material-ui/icons/Mic';
+import MicOff from '@material-ui/icons/MicOff';
+import PlayArrow from '@material-ui/icons/PlayArrow'
+import Send from '@material-ui/icons/Send';
+
+const styles = theme => ({
+    button: {
+      margin: theme.spacing.unit,
+    },
+    extendedIcon: {
+      marginRight: theme.spacing.unit,
+    },
+});
 
 class Recorder extends React.Component { 
     record=null;
     constructor(props) {
         super(props);
         this.clickHandler=this.clickHandler.bind(this)
-        
     }
     
     clickHandler () {
@@ -26,23 +41,19 @@ class Recorder extends React.Component {
     render() {
         return (
             <div>
-                <div className="row">
-                    <div className="col-sm-3">
-                        <Startrec onClick={this.clickHandler} />
-                    </div>
-                    <div className="col-sm-3">
-                        <Endrec onClick={this.endRecord}/>
-                    </div>
-                    <div className="col-sm-3">
-                        <Listenrec />
-                    </div>
-                    <div className="col-sm-3">
-                        <Sendrec />
-                    </div>
-                </div>
+            <Button variant="fab" color="primary" aria-label="Listen" onClick={this.clickHandler} >
+                <Mic />
+            </Button>
+            <Button variant="fab" color="secondary" aria-label="Stop" onClick={this.endRecord} >
+                <MicOff />
+            </Button>
             </div>
         );
     }
 }
 
-export default Recorder;
+Recorder.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(Recorder);
