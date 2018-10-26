@@ -3,7 +3,6 @@ var nodemailer = require('nodemailer');
 var refreshToken = '1/rmFjwRqyfYTLEKuX-zg-f4wqalflObWsYOek-F8uoHE';
 var accessToken = 'ya29.Gls_BhC_lYRRtfZg8eHA75DhMm7mywvqngpLQRPAq8jX2XxVBQ3hQ46Tm6zUxnaPPJFL1Uryd_JMguUwAaXInlDaa-LgZpXN8FPVlY3UD45AcHQdOZmpamrZEL_6'
 
-
 module.exports = (userEmail, subject, html) => {
     var transporter = nodemailer.createTransport({
         service: 'gmail',

@@ -2,7 +2,7 @@ import React from 'react';
 import Chat from '../Chat/Chat';
 import Username from './Username';
 import Language from '../Language/Language';
-import Recorder from '../Recorder/Recorder';
+import Recorder from '../Recorder/Recorder.js';
 
 
 class Chainchat extends React.Component {
