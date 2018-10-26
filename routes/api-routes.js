@@ -1,4 +1,3 @@
-// process.env.GOOGLE_APPLICATION_CREDENTIALS = 'config/GoogleAPI Trans.json';
 process.env.GOOGLE_APPLICATION_CREDENTIALS = 'config/GoogleAPI STT.json';
 const db = require('../models');
 const fs = require('fs');
@@ -12,7 +11,6 @@ const translate = new Translate({
 
 module.exports = app => {
     const io = require('../config/webSockets/socket.js')(app);
-    const sendMessage = require('../config/webSockets/sendMessage.js');
 
     app.post('/api/record', (req, res, next) => {
         const client = new speech.SpeechClient();
@@ -86,5 +84,4 @@ module.exports = app => {
     // app.post('/api/messageTranslate', (req, res, next) => {
     // this.convertLanguage(req, whateverLanguageTheUserChooses)
     // })
-
 };
