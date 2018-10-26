@@ -17,6 +17,8 @@ export const fetchLogin = (payload) => dispatch => {
                 type: FETCH_LOGIN_USER,
                 payload: data.token[0]
             })
+        }).catch(err => {
+            console.log(err);
         });
 }
 

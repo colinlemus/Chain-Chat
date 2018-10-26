@@ -10,13 +10,13 @@ export default class ForgotPassword extends Component {
             username: '',
         }
     }
-    
+
     handleInputChange = (event) => {
         this.setState({
             [event.target.name]: event.target.value
         });
     }
-    
+
     handleSubmit = (event) => {
         event.preventDefault();
 
@@ -26,9 +26,7 @@ export default class ForgotPassword extends Component {
         }
 
         axios.post('/api/forgot/', payload)
-            .then((response) => {
-                console.log(response);
-            }).catch((error) => {
+            .catch((error) => {
                 console.log(error);
             });
     }
