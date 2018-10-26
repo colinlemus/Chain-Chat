@@ -16,14 +16,14 @@ module.exports = app => {
         const client = new speech.SpeechClient();
         const encoding = 'LINEAR16';
         const sampleRateHertz = 16000;
-        const languageCode = 'es'; //replace with the data sent from the request
+        const languageCode = 'en-US';
         let messageOutput;
 
         const request = {
             config: {
-                encoding: encoding,
-                sampleRateHertz: sampleRateHertz,
-                languageCode: languageCode,
+                encoding,
+                sampleRateHertz,
+                languageCode,
             },
             interimResults: false,
         };
@@ -45,7 +45,7 @@ module.exports = app => {
             .on('error', console.error)
             .on('data', data => {
                 translate
-                    .translate(data.results[0].alternatives[0].transcript, languageCode)
+                    .translate(data.results[0].alternatives[0].transcript, 'es')
                     .then(results => {
                         const translation = results[0];
 
