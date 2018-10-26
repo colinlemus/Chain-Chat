@@ -16,37 +16,39 @@ import Send from '@material-ui/icons/Send';
 
 const styles = theme => ({
     button: {
-      margin: theme.spacing.unit,
+        margin: theme.spacing.unit,
     },
     extendedIcon: {
-      marginRight: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
     },
 });
 
-class Recorder extends React.Component { 
-    record=null;
+class Recorder extends React.Component {
+    record = null;
     constructor(props) {
         super(props);
-        this.clickHandler=this.clickHandler.bind(this)
+        this.clickHandler = this.clickHandler.bind(this)
     }
-    
-    clickHandler () {
 
-        // this.speechToText();
+    clickHandler() {
+        axios.post('http://localhost:8080/api/record')
+            .then((response) => {
+                console.log('client side post', response);
+            })
     }
     endRecord() {
         // this.record.stop;
     }
-    
+
     render() {
         return (
             <div>
-            <Button variant="fab" color="primary" aria-label="Listen" onClick={this.clickHandler} >
-                <Mic />
-            </Button>
-            <Button variant="fab" color="secondary" aria-label="Stop" onClick={this.endRecord} >
-                <MicOff />
-            </Button>
+                <Button variant="fab" color="primary" aria-label="Listen" onClick={this.clickHandler} >
+                    <Mic />
+                </Button>
+                <Button variant="fab" color="secondary" aria-label="Stop" onClick={this.endRecord} >
+                    <MicOff />
+                </Button>
             </div>
         );
     }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import openSocket from 'socket.io-client';
 
-const socket = openSocket('http://localhost:8081');
+// const socket = openSocket('http://localhost:8081');
 
 export default class test extends Component {
     constructor(props) {
@@ -14,12 +14,12 @@ export default class test extends Component {
     }
 
     componentDidMount() {
-        socket.on('chat message', (message) => {
-            console.log('received ' + message)
-            const messages = this.state.messages;
-            messages.push(message);
-            this.setState({ messages })
-        });
+        // socket.on('chat message', (message) => {
+        //     console.log('received ' + message)
+        //     const messages = this.state.messages;
+        //     messages.push(message);
+        //     this.setState({ messages })
+        // });
     }
 
     handleInputChange = (event) => {
@@ -31,7 +31,7 @@ export default class test extends Component {
     handleOnSubmit = (event) => {
         event.preventDefault();
         console.log("Submit handler");
-        socket.emit('chat message', this.state.message);
+        // socket.emit('chat message', this.state.message);
     }
 
     handleMessages = () => {

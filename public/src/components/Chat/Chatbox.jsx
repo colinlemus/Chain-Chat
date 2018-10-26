@@ -12,11 +12,13 @@ class Chatbox extends React.Component {
         }
     }
 
-    componentDidMount() {
+    componentWillMount() {
         socket.on('chat message', (message) => {
             console.log('received ' + message)
             const messages = this.state.messages;
-            messages.push(message);
+            const original = message.substr(0, message.indexOf('\n')); 
+            const translated = message.substr(message.indexOf('\n'),  (message.length - 1));
+            messages.push(original, translated);
             this.setState({ messages })
         });
     }

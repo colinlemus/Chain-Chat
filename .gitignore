@@ -5,7 +5,7 @@ node_modules
 
 # config
 config/config.json
-config/GoogleAPI.json
+config/GoogleAPI STT.json
 
 # testing
 /coverage

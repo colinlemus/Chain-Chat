@@ -9,8 +9,6 @@ var cookieParser = require('cookie-parser');
 var app = express();
 var PORT = process.env.port || 8080;
 var cors = require('cors');
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -56,25 +54,8 @@ app.use((req, res, next) => {
     res.sendFile(path.join(__dirname, 'public', 'build', 'index.html'));
 });
 
-io.on('connection', (socket) => {
-    console.log('a user connected');
-    socket.on('disconnect', () => {
-        console.log('user disconnected');
-    })
-});
-
-io.on('connection', (socket) => {
-    socket.on('chat message', (msg) => {
-        io.emit('chat message', msg);
-        console.log('message: ' + msg);
-        socket.send('Message: ' + msg);
-    });
-});
-
 database.sequelize.sync().then(() => {
     app.listen(PORT, () => {
         console.log('App listening on PORT ' + PORT);
     });
-
-    io.listen(8081);
 });

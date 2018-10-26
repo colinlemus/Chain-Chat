@@ -6,17 +6,19 @@ const record = require('node-record-lpcm16');
 const speech = require('@google-cloud/speech');
 const { Translate } = require('@google-cloud/translate');
 const projectId = 'constant-gecko-219921';
-var io = require('socket.io')();
 const translate = new Translate({
     projectId,
 });
 
 module.exports = app => {
+    const io = require('../config/webSockets/socket.js')(app);
+    const sendMessage = require('../config/webSockets/sendMessage.js');
+
     app.post('/api/record', (req, res, next) => {
         const client = new speech.SpeechClient();
         const encoding = 'LINEAR16';
         const sampleRateHertz = 16000;
-        const languageCode = 'en-US';
+        const languageCode = 'es'; //replace with the data sent from the request
         let messageOutput;
 
         const request = {
@@ -45,19 +47,14 @@ module.exports = app => {
             .on('error', console.error)
             .on('data', data => {
                 translate
-                    .translate(data.results[0].alternatives[0].transcript, 'es')
+                    .translate(data.results[0].alternatives[0].transcript, languageCode)
                     .then(results => {
                         const translation = results[0];
 
-                        // console.log('1');
-                        // io.on('connection', (socket) => {
-                        //     console.log('2');
-                        //     socket.on('chat message', () => {
-                        //         console.log('3');
-                        //         socket.send('Message: ' + translation);
-                        //         console.log('4');
-                        //     });
-                        // });
+                        io.emit('chat message', 
+                        `Original message: ${data.results[0].alternatives[0].transcript}
+                        \n
+                        Translated message: ${translation}`);
 
                         process.stdout.write(
                             data.results[0] && data.results[0].alternatives[0]
