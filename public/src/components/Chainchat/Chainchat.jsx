@@ -13,14 +13,13 @@ class Chainchat extends React.Component {
         return (
             <div className="container">
                 <div className="row">
-                    <h1> Welcome to Chain Chat! </h1>
+                <div className="col-sm-12">
+                    <img src='./ChainChatLogo.png' class="rounded mx-auto d-block" alt="Responsive image" width='722px' height='282px'/>
+                </div>
                 </div>
                 <div className="row">
                     <div className="col-sm-6">
                         <Username />
-                    </div>
-                    <div className="col-sm-6">
-                        <Language />
                     </div>
                 </div>
                 <div className="row">
@@ -29,8 +28,11 @@ class Chainchat extends React.Component {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-sm-12">
+                    <div className="col-sm-6 pt-3 pl-4">
                         <Recorder />
+                    </div>
+                    <div className="col-sm-6">
+                        <Language />
                     </div>
                 </div>
             </div>
