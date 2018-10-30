@@ -1,7 +1,7 @@
 import React from 'react';
 import openSocket from 'socket.io-client';
 
-const socket = openSocket('https://ec2-18-217-184-69.us-east-2.compute.amazonaws.com:8081', { secure: true });
+const socket = openSocket('http://ec2-18-217-184-69.us-east-2.compute.amazonaws.com:8081');
 
 class Chatbox extends React.Component {
     constructor(props) {

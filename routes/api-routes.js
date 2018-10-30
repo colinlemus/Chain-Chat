@@ -44,8 +44,8 @@ module.exports = app => {
                     .then(results => {
                         const translation = results[0];
 
-                        io.emit('chat message', 
-                        `Original message: ${data.results[0].alternatives[0].transcript}
+                        io.emit('chat message',
+                            `Original message: ${data.results[0].alternatives[0].transcript}
                         \n
                         Translated message: ${translation}`);
 
@@ -59,8 +59,6 @@ module.exports = app => {
                         console.error('ERROR:', err);
                     });
             });
-
-            console.log(recognizeStream);
 
         record
             .start({

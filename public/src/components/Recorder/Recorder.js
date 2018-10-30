@@ -65,7 +65,7 @@ class Recorder extends React.Component {
         this.clickHandler = this.clickHandler.bind(this)
     }
     state = {
-        language: 'English',
+        language: 'en',
     };
 
     handleChange = name => event => {
@@ -74,7 +74,7 @@ class Recorder extends React.Component {
         });
     };
     clickHandler() {
-        axios.post('/api/record')
+        axios.post('/api/record/' + this.state.language)
             .then((response) => {
                 console.log('client side post', response);
             })
