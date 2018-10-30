@@ -3,8 +3,6 @@ import Listenrec from './Listenrec';
 import Startrec from './Startrec';
 import Endrec from './Endrec';
 import Sendrec from './Sendrec';
-// import { speechToText } from '../../utilities/Speech'
-// import * as record from 'node-record-lpcm16';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -76,13 +74,13 @@ class Recorder extends React.Component {
         });
     };
     clickHandler() {
-        axios.post('http://localhost:8080/api/record')
+        axios.post(`http://localhost:8080/api/record/${this.state.language}`)
             .then((response) => {
                 console.log('client side post', response);
             })
     }
     endRecord() {
-        // this.record.stop;
+        // this.record.stop;    
     }
 
     
@@ -132,51 +130,7 @@ Recorder.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-// class Language extends React.Component {
-//     // state = {
-//     //     language: 'English',
-//     // };
 
-//     // handleChange = name => event => {
-//     //     this.setState({
-//     //         [name]: event.target.value,
-//     //     });
-//     // };
-
-//     render() {
-//         // const { classes } = this.props;
-
-//         return (
-//             // <form className={classes.container} noValidate autoComplete="off">
-//             //     <TextField
-//             //         id="standard-select-language"
-//             //         select
-//             //         label="Language Selector"
-//             //         className={classes.textField}
-//             //         value={this.state.language}
-//             //         onChange={this.handleChange('language')}
-//             //         SelectProps={{
-//             //             MenuProps: {
-//             //                 className: classes.menu,
-//             //             },
-//             //         }}
-//             //         helperText="Please select your language"
-//             //         margin="normal"
-//             //     >
-//             //         {languages.map(option => (
-//             //             <MenuItem key={option.value} value={option.value}>
-//             //                 {option.label}
-//             //             </MenuItem>
-//             //         ))}
-//             //     </TextField>
-//             // </form>
-//         );
-//     }
-// }
-
-// Language.propTypes = {
-//     classes: PropTypes.object.isRequired,
-// };
 
 export default withStyles(styles)(Recorder);
 

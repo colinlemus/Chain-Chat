@@ -12,12 +12,15 @@ const translate = new Translate({
 module.exports = app => {
     const io = require('../config/webSockets/socket.js')(app);
 
-    app.post('/api/record', (req, res, next) => {
+    app.post('/api/record/:language', (req, res, next) => {
+        const selectedLanguage = req.params.language;
         const client = new speech.SpeechClient();
         const encoding = 'LINEAR16';
         const sampleRateHertz = 16000;
         const languageCode = 'en-US';
         let messageOutput;
+
+        console.log('SELECTEDLANGUAGE VALUE', selectedLanguage);
 
         const request = {
             config: {
@@ -45,7 +48,8 @@ module.exports = app => {
             .on('error', console.error)
             .on('data', data => {
                 translate
-                    .translate(data.results[0].alternatives[0].transcript, 'es')
+                    .translate(data.results[0].alternatives[0].transcript, selectedLanguage)
+                    // .translate(data.results[0].alternatives[0].transcript, 'en')
                     .then(results => {
                         const translation = results[0];
 
