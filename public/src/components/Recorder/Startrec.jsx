@@ -8,7 +8,7 @@ class Callbutton extends React.Component {
     }
 
     handleClick = () => {
-        axios.post('http://localhost:8080/api/record')
+        axios.post('/api/record')
         .then((response) => {
             console.log('client side post', response);
         })

@@ -1,9 +1,8 @@
-var db = require('../models');
-var jwt = require('jsonwebtoken');
-var bCrypt = require('bcrypt-nodejs');
-var path = require('path');
-
-var EMAIL_SECRET = '1uK1ELJem9bczpBQ74xk';
+const db = require('../models');
+const jwt = require('jsonwebtoken');
+const bCrypt = require('bcrypt-nodejs');
+const path = require('path');
+const EMAIL_SECRET = '1uK1ELJem9bczpBQ74xk';
 
 module.exports = (app, passport) => {
     app.post('/api/login', (req, res, next) => {
@@ -47,7 +46,7 @@ module.exports = (app, passport) => {
     });
 
     app.get('/confirmation/:token', (req, res) => {
-        var { newUser: { id } } = jwt.verify(req.params.token, EMAIL_SECRET);
+        const { newUser: { id } } = jwt.verify(req.params.token, EMAIL_SECRET);
 
         db.users.update({ active: true }, { where: { id } });
     });
@@ -78,11 +77,11 @@ module.exports = (app, passport) => {
     });
 
     app.post('/api/newPass', (req, res, next) => {
-        var createHashedPassword = (enteredSignUpPassword) => {
+        const createHashedPassword = (enteredSignUpPassword) => {
             return bCrypt.hashSync(enteredSignUpPassword, bCrypt.genSaltSync(12), null);
         };
 
-        var generatedHashPassword = createHashedPassword(req.body.password);
+        const generatedHashPassword = createHashedPassword(req.body.password);
 
         db.users.findOne({
             where: {
@@ -115,7 +114,7 @@ module.exports = (app, passport) => {
 
 
     app.get('/forgot/:token', (req, res) => {
-        var { user } = jwt.verify(req.params.token, EMAIL_SECRET);
+        const { user } = jwt.verify(req.params.token, EMAIL_SECRET);
 
         req.session.user = user;
         req.session.save((err) => {

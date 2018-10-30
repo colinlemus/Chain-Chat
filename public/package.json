@@ -2,7 +2,7 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:8080/",
+  "proxy": "http://localhost:63453/",
   "dependencies": {
     "ajv": "^6.5.4",
     "axios": "^0.18.0",
