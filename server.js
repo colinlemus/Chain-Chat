@@ -8,10 +8,16 @@ var MySQLStore = require('express-mysql-session')(session);
 var cookieParser = require('cookie-parser');
 var app = express();
 var PORT = process.env.port || 8080;
+var cors = require('cors');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(cors({
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+    origin: 'http://localhost:3000'
+}));
 
 var sessionStore = new MySQLStore({
     port: 3306,
