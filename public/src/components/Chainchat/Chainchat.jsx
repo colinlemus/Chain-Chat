@@ -31,9 +31,7 @@ class Chainchat extends React.Component {
                     <div className="col-sm-6 pt-3 pl-4">
                         <Recorder />
                     </div>
-                    <div className="col-sm-6">
-                        <Language />
-                    </div>
+                   
                 </div>
             </div>
         );

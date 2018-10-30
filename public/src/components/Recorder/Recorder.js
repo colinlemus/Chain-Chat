@@ -13,6 +13,9 @@ import Mic from '@material-ui/icons/Mic';
 import MicOff from '@material-ui/icons/MicOff';
 import PlayArrow from '@material-ui/icons/PlayArrow'
 import Send from '@material-ui/icons/Send';
+import MenuItem from '@material-ui/core/MenuItem';
+import TextField from '@material-ui/core/TextField';
+
 
 const styles = theme => ({
     button: {
@@ -21,7 +24,41 @@ const styles = theme => ({
     extendedIcon: {
         marginRight: theme.spacing.unit,
     },
+    container: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+    textField: {
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
+        width: 200,
+    },
+    dense: {
+        marginTop: 19,
+    },
+    menu: {
+        width: 200,
+    },
 });
+
+const languages = [
+    {
+        value: 'en',
+        label: 'English',
+    },
+    {
+        value: 'es',
+        label: 'Spanish',
+    },
+    {
+        value: 'de',
+        label: 'German',
+    },
+    {
+        value: 'la',
+        label: 'Latin',
+    },
+];
 
 class Recorder extends React.Component {
     record = null;
@@ -29,7 +66,15 @@ class Recorder extends React.Component {
         super(props);
         this.clickHandler = this.clickHandler.bind(this)
     }
+    state = {
+        language: 'English',
+    };
 
+    handleChange = name => event => {
+        this.setState({
+            [name]: event.target.value,
+        });
+    };
     clickHandler() {
         axios.post('http://localhost:8080/api/record')
             .then((response) => {
@@ -40,16 +85,45 @@ class Recorder extends React.Component {
         // this.record.stop;
     }
 
+    
     render() {
+        const { classes } = this.props;
+        
         return (
-            <div>
-                <Button variant="fab" color="primary" aria-label="Listen" onClick={this.clickHandler} >
-                    <Mic />
-                </Button>
-                <Button variant="fab" color="secondary" aria-label="Stop" onClick={this.endRecord} >
-                    <MicOff />
-                </Button>
-            </div>
+            <div class='row'>
+                <div>
+                    <Button variant="fab" color="primary" aria-label="Listen" onClick={this.clickHandler} >
+                        <Mic />
+                    </Button>
+                    <Button variant="fab" color="secondary" aria-label="Stop" onClick={this.endRecord} >
+                        <MicOff />
+                    </Button>
+                </div>
+
+                <form className={classes.container} noValidate autoComplete="off">
+                <TextField
+                    id="standard-select-language"
+                    select
+                    label="Language Selector"
+                    className={classes.textField}
+                    value={this.state.language}
+                    onChange={this.handleChange('language')}
+                    SelectProps={{
+                        MenuProps: {
+                            className: classes.menu,
+                        },
+                    }}
+                    helperText="Please select your language"
+                    margin="normal"
+                >
+                    {languages.map(option => (
+                        <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                        </MenuItem>
+                    ))}
+                </TextField>
+            </form>
+        </div>    
         );
     }
 }
@@ -58,4 +132,51 @@ Recorder.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
+// class Language extends React.Component {
+//     // state = {
+//     //     language: 'English',
+//     // };
+
+//     // handleChange = name => event => {
+//     //     this.setState({
+//     //         [name]: event.target.value,
+//     //     });
+//     // };
+
+//     render() {
+//         // const { classes } = this.props;
+
+//         return (
+//             // <form className={classes.container} noValidate autoComplete="off">
+//             //     <TextField
+//             //         id="standard-select-language"
+//             //         select
+//             //         label="Language Selector"
+//             //         className={classes.textField}
+//             //         value={this.state.language}
+//             //         onChange={this.handleChange('language')}
+//             //         SelectProps={{
+//             //             MenuProps: {
+//             //                 className: classes.menu,
+//             //             },
+//             //         }}
+//             //         helperText="Please select your language"
+//             //         margin="normal"
+//             //     >
+//             //         {languages.map(option => (
+//             //             <MenuItem key={option.value} value={option.value}>
+//             //                 {option.label}
+//             //             </MenuItem>
+//             //         ))}
+//             //     </TextField>
+//             // </form>
+//         );
+//     }
+// }
+
+// Language.propTypes = {
+//     classes: PropTypes.object.isRequired,
+// };
+
 export default withStyles(styles)(Recorder);
+
