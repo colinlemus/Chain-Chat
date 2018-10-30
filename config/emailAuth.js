@@ -1,10 +1,10 @@
 var nodemailer = require('nodemailer');
 
-var refreshToken = '1/rmFjwRqyfYTLEKuX-zg-f4wqalflObWsYOek-F8uoHE';
-var accessToken = 'ya29.Gls_BhC_lYRRtfZg8eHA75DhMm7mywvqngpLQRPAq8jX2XxVBQ3hQ46Tm6zUxnaPPJFL1Uryd_JMguUwAaXInlDaa-LgZpXN8FPVlY3UD45AcHQdOZmpamrZEL_6'
+const refreshToken = '1/rmFjwRqyfYTLEKuX-zg-f4wqalflObWsYOek-F8uoHE';
+const accessToken = 'ya29.Gls_BhC_lYRRtfZg8eHA75DhMm7mywvqngpLQRPAq8jX2XxVBQ3hQ46Tm6zUxnaPPJFL1Uryd_JMguUwAaXInlDaa-LgZpXN8FPVlY3UD45AcHQdOZmpamrZEL_6'
 
 module.exports = (userEmail, subject, html) => {
-    var transporter = nodemailer.createTransport({
+    const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
             type: 'OAuth2',
@@ -16,7 +16,7 @@ module.exports = (userEmail, subject, html) => {
         }
     });
 
-    var mailOptions = {
+    const mailOptions = {
         from: 'noreplychainchat@gmail.com',
         to: userEmail,
         subject,
@@ -28,6 +28,7 @@ module.exports = (userEmail, subject, html) => {
         if (error) {
             return console.log(error);
         }
+        
         console.log('Message sent: %s', info.messageId);
     });
 }

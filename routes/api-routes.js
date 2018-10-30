@@ -31,30 +31,21 @@ module.exports = app => {
             interimResults: false,
         };
 
-        const convertLanguage = (text, target) => {
-            translate
-                .translate(text, target)
-                .then(results => {
-                    const translation = results[0];
-                    return translation;
-                })
-                .catch(err => {
-                    console.error('ERROR:', err);
-                });
-        }
+        console.log('deploy test 1');
 
         const recognizeStream = client
             .streamingRecognize(request)
             .on('error', console.error)
             .on('data', data => {
+                console.log('deploy test 2');
                 translate
                     .translate(data.results[0].alternatives[0].transcript, selectedLanguage)
                     // .translate(data.results[0].alternatives[0].transcript, 'en')
                     .then(results => {
                         const translation = results[0];
 
-                        io.emit('chat message', 
-                        `Original message: ${data.results[0].alternatives[0].transcript}
+                        io.emit('chat message',
+                            `Original message: ${data.results[0].alternatives[0].transcript}
                         \n
                         Translated message: ${translation}`);
 
@@ -71,7 +62,7 @@ module.exports = app => {
 
         record
             .start({
-                sampleRateHertz: sampleRateHertz,
+                sampleRateHertz,
                 threshold: 0,
 
                 verbose: false,

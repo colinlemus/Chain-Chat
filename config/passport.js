@@ -1,12 +1,11 @@
-var bCrypt = require('bcrypt-nodejs');
-var sendEmail = require('./emailAuth');
-var jwt = require('jsonwebtoken');
-
-var EMAIL_SECRET = '1uK1ELJem9bczpBQ74xk';
-var _ = require('underscore');
+const bCrypt = require('bcrypt-nodejs');
+const sendEmail = require('./emailAuth');
+const jwt = require('jsonwebtoken');
+const EMAIL_SECRET = '1uK1ELJem9bczpBQ74xk';
+const _ = require('underscore');
 
 module.exports = (passport, db) => {
-    var LocalStrategy = require('passport-local').Strategy;
+    const LocalStrategy = require('passport-local').Strategy;
 
     passport.serializeUser((user, done) => {
         done(null, user.id);
@@ -25,7 +24,7 @@ module.exports = (passport, db) => {
     },
 
         (req, username, password, done) => {
-            var verfiyPassword = (entredLoginPassword, userPassword) => {
+            const verfiyPassword = (entredLoginPassword, userPassword) => {
                 return bCrypt.compareSync(entredLoginPassword, userPassword);
             }
 
@@ -70,7 +69,7 @@ module.exports = (passport, db) => {
     },
 
         (req, username, password, done) => {
-            var createHashedPassword = (enteredSignUpPassword) => {
+            const createHashedPassword = (enteredSignUpPassword) => {
                 return bCrypt.hashSync(enteredSignUpPassword, bCrypt.genSaltSync(12), null);
             };
 
@@ -82,9 +81,9 @@ module.exports = (passport, db) => {
                 if (user) {
                     return done(null, false, { message: 'That username is already taken.' });
                 } else {
-                    var generatedHashPassword = createHashedPassword(password);
+                    const generatedHashPassword = createHashedPassword(password);
 
-                    var data = {
+                    const data = {
                         username,
                         password: generatedHashPassword,
                         email: req.body.email,
@@ -101,14 +100,14 @@ module.exports = (passport, db) => {
 
                         if (newUser) {
                             try {
-                                var emailToken = jwt.sign(
+                                const emailToken = jwt.sign(
                                     {
                                         newUser: _.pick(newUser, 'id'),
                                     },
                                     EMAIL_SECRET, { expiresIn: '1d' }
                                 )
 
-                                var verificationURL = `http://localhost:8080/confirmation/${emailToken}`
+                                const verificationURL = `http://localhost:8080/confirmation/${emailToken}`;
 
                                 sendEmail(
                                     req.body.email,
@@ -145,14 +144,14 @@ module.exports = (passport, db) => {
                     }
 
                     try {
-                        var emailToken = jwt.sign(
+                        const emailToken = jwt.sign(
                             {
                                 user: _.pick(user, 'username'),
                             },
                             EMAIL_SECRET, { expiresIn: '3m' }
                         )
 
-                        var changeURL = `http://localhost:8080/forgot/${emailToken}`
+                        const changeURL = `http://localhost:8080/forgot/${emailToken}`;
                         console.log(user.dataValues.email);
 
                         sendEmail(
