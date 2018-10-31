@@ -42,7 +42,6 @@ module.exports = app => {
                 console.log('deploy test 2');
                 translate
                     .translate(data.results[0].alternatives[0].transcript, selectedLanguage)
-                    // .translate(data.results[0].alternatives[0].transcript, 'en')
                     .then(results => {
                         const translation = results[0];
 
@@ -83,14 +82,13 @@ module.exports = app => {
         const username = req.params.username;
         translate
             .translate(message, 'es')
-            // .translate(data.results[0].alternatives[0].transcript, 'en')
             .then(results => {
                 const translation = results[0];
 
                 io.emit('chat message',
-                    `Original message: ${username}: ${message}
+                    `${username}: Original message: ${message}
                         \n
-                        Translated message: ${username}: ${translation}`);
+                        ${username}: Translated message: ${translation}`);
             })
             .catch(err => {
                 console.error('ERROR:', err);

@@ -9,8 +9,8 @@ module.exports = (userEmail, subject, html) => {
         auth: {
             type: 'OAuth2',
             user: "noreplychainchat@gmail.com",
-            clientId: "725763872347-ho0tqurkggl4on5f41b4tmfvjk0kbe7h.apps.googleusercontent.com",
-            clientSecret: "Cb3KP1nhAWoLhPLDceXXinpQ",
+            clientId: process.env.EMAIL_CLIENT_ID,
+            clientSecret: process.env.EMAIL_CLIENT_SECRET,
             refreshToken,
             accessToken
         }
