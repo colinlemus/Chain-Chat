@@ -1,56 +1,88 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+// import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Send from '@material-ui/icons/Send';
+import { connect } from 'react-redux';
+import axios from 'axios';
 
-const styles = theme => ({
-    container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
-        width: 200,
-    },
-    dense: {
-        marginTop: 19,
-    },
-    menu: {
-        width: 200,
-    },
-});
-
+// const styles = theme => ({
+//     container: {
+//         display: 'flex',
+//         flexWrap: 'wrap',
+//     },
+//     textField: {
+//         marginLeft: theme.spacing.unit,
+//         marginRight: theme.spacing.unit,
+//         width: 200,
+//     },
+//     dense: {
+//         marginTop: 19,
+//     },
+//     menu: {
+//         width: 200,
+//     },
+//     button: {
+//         margin: theme.spacing.unit,
+//     },
+//     extendedIcon: {
+//         marginRight: theme.spacing.unit,
+//     },
+// });
 
 class Chatinput extends React.Component {
-    handleInputChange = (event) => {
+    state = {
+        message: ''
+    }
+
+    handleChange = name => event => {
         this.setState({
-            [event.target.name]: event.target.value
+            [name]: event.target.value,
         });
+    };
+
+    handleOnSubmit = () => {
+        axios.post(`/api/message/${this.state.message}/${this.props.user.username}`)
+            .then((response) => {
+                console.log('client side post', response);
+            })
     }
 
     render() {
-        const { classes } = this.props;
+        // const { classes } = this.props;
 
         return (
-            <form className={classes.container} noValidate autoComplete="off">
-                <TextField
-                    id="standard-full-width"
-                    label="Chat"
-                    style={{ margin: 8 }}
-                    fullWidth
-                    margin="normal"
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                />
-            </form>
+            <div>
+                <form className=''/*{classes.container}*/ noValidate autoComplete="off">
+                    <TextField
+                        id="standard-full-width"
+                        label="Chat"
+                        value={this.state.message}
+                        onChange={this.handleChange('message')}
+                        style={{ margin: 8 }}
+                        fullWidth
+                        margin="normal"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                    />
+
+                    <Button variant="fab" color="primary" aria-label="Send" className=''/*{classes.button}*/ onClick={this.handleOnSubmit}>
+                        <Send />
+                    </Button>
+                </form>
+            </div>
         );
     }
 }
 
-Chatinput.propTypes = {
-    classes: PropTypes.object.isRequired,
+Chatinput.prototypes = {
+    user: PropTypes.object,
 };
 
-export default withStyles(styles)(Chatinput);
+const mapStateToProps = state => ({
+    user: state.user
+});
+
+export default connect(mapStateToProps, {})(Chatinput);
