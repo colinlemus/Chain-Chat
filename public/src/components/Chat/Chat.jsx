@@ -1,25 +1,22 @@
 import React from 'react';
-import Chatbox from './Chatbox';
-import Chatinput from './Chatinput';
+import ChatBox from './ChatBox';
+import ChatInput from './ChatInput';
 import openSocket from 'socket.io-client';
 
 const socket = openSocket('http://localhost:8081');
 
 class Chat extends React.Component {
-    constructor(props) {
-        super(props);
-    }
     render() {
         return (
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12">
-                    <Chatbox socket={socket}/>
+            <div className="container">
+                <div className="row">
+                    <div className="col-sm-12">
+                        <ChatBox socket={socket} />
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                    <Chatinput socket={socket}/> 
+                <div className="row">
+                    <div className="col-sm-12">
+                        <ChatInput socket={socket} />
                     </div>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Chatbox extends React.Component {
+class ChatBox extends React.Component {
     constructor(props) {
         super(props);
 
@@ -11,7 +11,6 @@ class Chatbox extends React.Component {
 
     componentWillMount() {
         this.props.socket.on('chat message', (message) => {
-            console.log('received ' + message)
             const messages = this.state.messages;
             const original = message.substr(0, message.indexOf('\n')); 
             const translated = message.substr(message.indexOf('\n'),  (message.length - 1));
@@ -40,4 +39,4 @@ class Chatbox extends React.Component {
     }
 }
 
-export default Chatbox;
+export default ChatBox;

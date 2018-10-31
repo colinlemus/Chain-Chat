@@ -1,7 +1,6 @@
 const db = require('../models');
 const jwt = require('jsonwebtoken');
 const bCrypt = require('bcrypt-nodejs');
-const path = require('path');
 const EMAIL_SECRET = '1uK1ELJem9bczpBQ74xk';
 
 module.exports = (app, passport) => {

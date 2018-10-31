@@ -31,7 +31,7 @@ import axios from 'axios';
 //     },
 // });
 
-class Chatinput extends React.Component {
+class ChatInput extends React.Component {
     state = {
         message: ''
     }
@@ -42,11 +42,16 @@ class Chatinput extends React.Component {
         });
     };
 
-    handleOnSubmit = () => {
+    handleOnSubmit = (event) => {
+        event.preventDefault();
         axios.post(`/api/message/${this.state.message}/${this.props.user.username}`)
             .then((response) => {
                 console.log('client side post', response);
-            })
+            });
+
+        this.setState({
+            message: ''
+        });
     }
 
     render() {
@@ -54,7 +59,7 @@ class Chatinput extends React.Component {
 
         return (
             <div>
-                <form className=''/*{classes.container}*/ noValidate autoComplete="off">
+                <form className=''/*{classes.container}*/ noValidate autoComplete="off" onSubmit={this.handleOnSubmit}>
                     <TextField
                         id="standard-full-width"
                         label="Chat"
@@ -77,7 +82,7 @@ class Chatinput extends React.Component {
     }
 }
 
-Chatinput.prototypes = {
+ChatInput.prototypes = {
     user: PropTypes.object,
 };
 
@@ -85,4 +90,4 @@ const mapStateToProps = state => ({
     user: state.user
 });
 
-export default connect(mapStateToProps, {})(Chatinput);
+export default connect(mapStateToProps, {})(ChatInput);

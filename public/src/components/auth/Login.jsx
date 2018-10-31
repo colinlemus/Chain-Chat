@@ -52,8 +52,8 @@ class Login extends Component {
             <div className='container'>
                 <div className='row'>
                     <div className='col-12'>
-                        <img src='./ChainChatLogo.png' class="rounded mx-auto d-block" alt="Responsive image" width='722px' height='282px'/>
-                    </div>                    
+                        <img src='./ChainChatLogo.png' class="rounded mx-auto d-block" alt="Responsive" width='722px' height='282px' />
+                    </div>
                 </div>
                 <div className='row'>
                     <div className='col-12'>

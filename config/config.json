@@ -8,10 +8,10 @@
     },
     
     "production": {
-        "username": "",
-        "password": "",
-        "database": "",
-        "host": "",
+        "username": "chaincha",
+        "password": "0saC*X52fSy*A2",
+        "database": "chaincha_db",
+        "host": "127.0.0.1",
         "dialect": "mysql"
     }
 }
