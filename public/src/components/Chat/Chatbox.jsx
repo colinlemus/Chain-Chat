@@ -1,7 +1,4 @@
 import React from 'react';
-import openSocket from 'socket.io-client';
-
-const socket = openSocket('http://ec2-18-217-184-69.us-east-2.compute.amazonaws.com:8081');
 
 class Chatbox extends React.Component {
     constructor(props) {
@@ -13,7 +10,7 @@ class Chatbox extends React.Component {
     }
 
     componentWillMount() {
-        socket.on('chat message', (message) => {
+        this.props.socket.on('chat message', (message) => {
             console.log('received ' + message)
             const messages = this.state.messages;
             const original = message.substr(0, message.indexOf('\n')); 

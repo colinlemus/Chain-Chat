@@ -13,6 +13,7 @@ import PlayArrow from '@material-ui/icons/PlayArrow'
 import Send from '@material-ui/icons/Send';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
+import { connect } from 'react-redux';
 
 
 const styles = theme => ({
@@ -74,7 +75,7 @@ class Recorder extends React.Component {
         });
     };
     clickHandler() {
-        axios.post('/api/record/' + this.state.language)
+        axios.post(`/api/record/${this.state.language}/${this.props.user.username}`)
             .then((response) => {
                 console.log('client side post', response);
             })
@@ -127,9 +128,14 @@ class Recorder extends React.Component {
 
 Recorder.propTypes = {
     classes: PropTypes.object.isRequired,
+    user: PropTypes.object,
 };
 
 
+const mapStateToProps = state => ({
+    user: state.user
+});
 
-export default withStyles(styles)(Recorder);
+
+export default connect(mapStateToProps, {})(withStyles(styles)(Recorder));
 

@@ -12,8 +12,9 @@ const translate = new Translate({
 module.exports = app => {
     const io = require('../config/webSockets/socket.js')(app);
 
-    app.post('/api/record/:language', (req, res, next) => {
+    app.post('/api/record/:language/:username', (req, res, next) => {
         const selectedLanguage = req.params.language;
+        const username = req.params.username;
         const client = new speech.SpeechClient();
         const encoding = 'LINEAR16';
         const sampleRateHertz = 16000;
@@ -21,6 +22,7 @@ module.exports = app => {
         let messageOutput;
 
         console.log('SELECTEDLANGUAGE VALUE', selectedLanguage);
+        console.log('username', username);
 
         const request = {
             config: {
@@ -45,9 +47,9 @@ module.exports = app => {
                         const translation = results[0];
 
                         io.emit('chat message',
-                            `Original message: ${data.results[0].alternatives[0].transcript}
+                            `Original message: ${username}: ${data.results[0].alternatives[0].transcript}
                         \n
-                        Translated message: ${translation}`);
+                        Translated message: ${username}: ${translation}`);
 
                         process.stdout.write(
                             data.results[0] && data.results[0].alternatives[0]
@@ -76,7 +78,22 @@ module.exports = app => {
         return res.json();
     })
 
-    // app.post('/api/messageTranslate', (req, res, next) => {
-    // this.convertLanguage(req, whateverLanguageTheUserChooses)
-    // })
+    app.post('/api/message/:message/:username', (req, res, next) => {
+        const message = req.params.message;
+        const username = req.params.username;
+        translate
+            .translate(message, 'es')
+            // .translate(data.results[0].alternatives[0].transcript, 'en')
+            .then(results => {
+                const translation = results[0];
+
+                io.emit('chat message',
+                    `Original message: ${username}: ${message}
+                        \n
+                        Translated message: ${username}: ${translation}`);
+            })
+            .catch(err => {
+                console.error('ERROR:', err);
+            });
+    })
 };

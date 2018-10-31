@@ -1,7 +1,9 @@
 import React from 'react';
 import Chatbox from './Chatbox';
 import Chatinput from './Chatinput';
-import Sendbutton from './Sendbutton';
+import openSocket from 'socket.io-client';
+
+const socket = openSocket('http://localhost:8081');
 
 class Chat extends React.Component {
     constructor(props) {
@@ -12,15 +14,12 @@ class Chat extends React.Component {
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12">
-                    <Chatbox />
+                    <Chatbox socket={socket}/>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-10">
-                    <Chatinput /> 
-                    </div>
-                    <div class="col-sm-2">
-                    <Sendbutton />
+                    <div class="col-sm-12">
+                    <Chatinput socket={socket}/> 
                     </div>
                 </div>
             </div>
