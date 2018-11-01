@@ -66,7 +66,7 @@ module.exports = app => {
                 sampleRateHertz,
                 threshold: 0,
 
-                verbose: false,
+                verbose: true,
                 recordProgram: 'rec', // Try also "arecord" or "sox"
                 silence: '10.0',
             })
