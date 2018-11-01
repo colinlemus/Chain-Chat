@@ -8,7 +8,7 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { initializeSession, initializeForgotSession } from './redux/actions/auth/authAction';
 import ForgotPassword from './components/auth/ForgotPassword';
 import ForgotPassword2 from './components/auth/ForgotPassword2';
-import Chainchat from './components/ChainChat/ChainChat';
+import Chainchat from './components/ChainChat/ChainChat.jsx';
 
 class App extends Component {
     componentWillMount = () => {
