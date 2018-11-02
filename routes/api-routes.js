@@ -13,16 +13,11 @@ module.exports = app => {
     const io = require('../config/webSockets/socket.js')(app);
 
     app.post('/api/record/:language/:username', (req, res, next) => {
-        const selectedLanguage = req.params.language;
         const username = req.params.username;
+        const languageCode = req.params.language;
         const client = new speech.SpeechClient();
         const encoding = 'LINEAR16';
         const sampleRateHertz = 16000;
-        const languageCode = 'en-US';
-        let messageOutput;
-
-        console.log('SELECTEDLANGUAGE VALUE', selectedLanguage);
-        console.log('username', username);
 
         const request = {
             config: {
@@ -33,32 +28,17 @@ module.exports = app => {
             interimResults: false,
         };
 
-        console.log('deploy test 1');
-
         const recognizeStream = client
             .streamingRecognize(request)
             .on('error', console.error)
             .on('data', data => {
-                console.log('deploy test 2');
-                translate
-                    .translate(data.results[0].alternatives[0].transcript, selectedLanguage)
-                    .then(results => {
-                        const translation = results[0];
+                io.emit('chat message', `${username} \n ${data.results[0].alternatives[0].transcript}`);
 
-                        io.emit('chat message',
-                            `Original message: ${username}: ${data.results[0].alternatives[0].transcript}
-                        \n
-                        Translated message: ${username}: ${translation}`);
-
-                        process.stdout.write(
-                            data.results[0] && data.results[0].alternatives[0]
-                                ? `Transcription: ${translation}\n`
-                                : `\n\nReached transcription time limit, press Ctrl+C\n`
-                        )
-                    })
-                    .catch(err => {
-                        console.error('ERROR:', err);
-                    });
+                process.stdout.write(
+                    data.results[0] && data.results[0].alternatives[0]
+                        ? `Transcription: ${data.results[0].alternatives[0].transcript}\n`
+                        : `\n\nReached transcription time limit, press Ctrl+C\n`
+                )
             });
 
         record
@@ -66,7 +46,7 @@ module.exports = app => {
                 sampleRateHertz,
                 threshold: 0,
 
-                verbose: true,
+                verbose: false,
                 recordProgram: 'rec', // Try also "arecord" or "sox"
                 silence: '10.0',
             })
@@ -81,11 +61,7 @@ module.exports = app => {
         const message = req.params.message;
         const username = req.params.username;
 
-        if(username === 'undefined') {
-            io.emit('chat message', `test123 \n ${message}`);
-        } else {
-            io.emit('chat message', `${username} \n ${message}`);
-        }
+        io.emit('chat message', `${username} \n ${message}`);
     });
 
     app.post('/api/translate/:message/:username/:language', (req, res, next) => {
@@ -103,7 +79,6 @@ module.exports = app => {
                     translation,
                     username
                 });
-
             })
             .catch(err => {
                 console.error('ERROR:', err);

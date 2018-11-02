@@ -313,7 +313,7 @@ class Recorder extends React.Component {
     };
 
     startRecord = () => {
-        axios.post(`/api/record/${this.state.language}/${this.props.user.username}`)
+        axios.post(`/api/record/${this.props.chat.language}/${this.props.user.username}`)
             .then((response) => {
                 console.log('client side post', response);
             })
