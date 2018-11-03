@@ -9,6 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
 import { setLanguage } from '../../redux/actions/chat/chatAction';
+import Grid from '@material-ui/core/Grid';
 
 const styles = theme => ({
     button: {
@@ -326,40 +327,48 @@ class Recorder extends React.Component {
         const { classes } = this.props;
         
         return (
-            <div className='row'>
-                <div>
-                    <Button variant="fab" color="primary" aria-label="Listen" onClick={this.startRecord} >
-                        <Mic />
-                    </Button>
-                    <Button variant="fab" color="secondary" aria-label="Stop" onClick={this.endRecord} >
-                        <MicOff />
-                    </Button>
-                </div>
+            <Grid >
+                    <Grid item xs={6}>
+                        <Button variant="fab" color="primary" aria-label="Listen" onClick={this.startRecord} >
+                            <Mic />
+                        </Button>
+                        <Button variant="fab" color="secondary" aria-label="Stop" onClick={this.endRecord} >
+                            <MicOff />
+                        </Button>
+                    </Grid>
 
-                <form className={classes.container} noValidate autoComplete="off">
-                <TextField
-                    id="standard-select-language"
-                    select
-                    label="Language Selector"
-                    className={classes.textField}
-                    value={this.state.language}
-                    onChange={this.handleChange('language')}
-                    SelectProps={{
-                        MenuProps: {
-                            className: classes.menu,
-                        },
-                    }}
-                    helperText="Please select your language"
-                    margin="normal"
-                >
-                    {languages.map(option => (
-                        <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                        </MenuItem>
-                    ))}
-                </TextField>
-            </form>
-        </div>    
+                    <Grid item xs={6}>
+                        <div className="col-md-6" >
+                            <form className={classes.container} noValidate autoComplete="off">
+                                <div className='row'>
+                                    <Grid item xs={4} >
+                                        <TextField
+                                            id="standard-select-language"
+                                            select
+                                            label="Language Selector"
+                                            className={classes.textField}
+                                            value={this.state.language}
+                                            onChange={this.handleChange('language')}
+                                            SelectProps={{
+                                                MenuProps: {
+                                                    className: classes.menu,
+                                                },
+                                            }}
+                                            helperText="Please select your language"
+                                            margin="normal"
+                                        >
+                                            {languages.map(option => (
+                                                <MenuItem key={option.value} value={option.value}>
+                                                    {option.label}
+                                                </MenuItem>
+                                            ))}
+                                        </TextField>
+                                    </ Grid>    
+                                </div>    
+                        </form>
+                    </div>
+                </Grid>
+            </Grid> 
         );
     }
 }
