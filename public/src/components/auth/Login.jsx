@@ -77,32 +77,11 @@ class Login extends Component {
                                     </form>
                                 </div>
                             </div>
-                            <div>
+                            <div className='m-2 p-3'>
                                 <Link to='/register'>Sign up</Link>
                             </div>
-                            <div>
+                            <div className='m-2 p-3'>
                                 <Link to='/forgot'>Forgot Password</Link>
-                            </div>
-                            <div>
-                                ID: {this.props.user.id}
-                            </div>
-                            <div>
-                                Username: {this.props.user.username}
-                            </div>
-                            <div>
-                                Password: {this.props.user.password}
-                            </div>
-                            <div>
-                                Email: {this.props.user.email}
-                            </div>
-                            <div>
-                                First Name: {this.props.user.firstName}
-                            </div>
-                            <div>
-                                Last Name: {this.props.user.lastName}
-                            </div>
-                            <div>
-                                2 Factor Auth: {this.handleFactorAuth(this.props.user.factorAuth)}
                             </div>
                         </div>
                     </div>
