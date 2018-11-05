@@ -338,7 +338,7 @@ class Recorder extends React.Component {
                     </Grid>
 
                     <Grid item xs={6}>
-                        <div className="col-md-6" >
+                        <div className="col-md-6 mt-3 mb-5">
                             <form className={classes.container} noValidate autoComplete="off">
                                 <div className='row'>
                                     <Grid item xs={4} >

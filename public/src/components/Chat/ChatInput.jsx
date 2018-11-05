@@ -7,30 +7,6 @@ import Send from '@material-ui/icons/Send';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
-// const styles = theme => ({
-//     container: {
-//         display: 'flex',
-//         flexWrap: 'wrap',
-//     },
-//     textField: {
-//         marginLeft: theme.spacing.unit,
-//         marginRight: theme.spacing.unit,
-//         width: 200,
-//     },
-//     dense: {
-//         marginTop: 19,
-//     },
-//     menu: {
-//         width: 200,
-//     },
-//     button: {
-//         margin: theme.spacing.unit,
-//     },
-//     extendedIcon: {
-//         marginRight: theme.spacing.unit,
-//     },
-// });
-
 class ChatInput extends React.Component {
     state = {
         message: ''
@@ -55,13 +31,13 @@ class ChatInput extends React.Component {
     }
 
     render() {
-        // const { classes } = this.props;
 
         return (
-            <div>
-                <form className=''/*{classes.container}*/ noValidate autoComplete="off" onSubmit={this.handleOnSubmit}>
+            <div className="row">
+                <form noValidate autoComplete="off" onSubmit={this.handleOnSubmit}>
                     <TextField
                         id="standard-full-width"
+                        className='col-sm-8'
                         label="Chat"
                         value={this.state.message}
                         onChange={this.handleChange('message')}
@@ -72,8 +48,7 @@ class ChatInput extends React.Component {
                             shrink: true,
                         }}
                     />
-
-                    <Button variant="fab" color="primary" aria-label="Send" className=''/*{classes.button}*/ onClick={this.handleOnSubmit}>
+                    <Button className='col-sm-4' variant="fab" color="primary" aria-label="Send" onClick={this.handleOnSubmit}>
                         <Send />
                     </Button>
                 </form>

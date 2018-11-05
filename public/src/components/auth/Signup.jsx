@@ -44,7 +44,12 @@ class Signup extends Component {
         return (
             <div className='container'>
                 <div className='row'>
-                    <div className='col-12'>
+                    <div className='col-12 mb-2'>
+                        <img src='./ChainChatLogo.png' class="rounded mx-auto d-block" alt="Responsive" width='722px' height='282px' />
+                    </div>
+                </div>
+                <div className='row'>
+                    <div className='col-12 mb-2'>
                         <div className='text-center'>
                             <div className='card'>
                                 <div className='card-header font-weight-bold'>Sign up</div>
