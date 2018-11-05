@@ -14,16 +14,24 @@ class ChatBox extends React.Component {
 
     componentWillMount() {
         this.props.socket.on('chat message', (message) => {
+            console.log('new message');
             const username = message.substr(0, message.indexOf('\n')).trim();
             const chatMessage = message.substr(message.indexOf('\n'), (message.length - 1)).trim();
-            axios.post(`/api/translate/${chatMessage}/${username}/${this.props.chat.language}`)
+
+            const payload = {
+                chatMessage,
+                username,
+                language: this.props.chat.language
+            }
+
+            axios.post(`/api/translate/`, payload)
                 .then(data => {
                     const recievedMessage = data.data.message;
                     const recievedTranslation = data.data.translation;
                     const recievedUsername = data.data.username;
                     const messages = this.state.messages;
-                    const original = `Original Message: ${recievedUsername}: ${recievedMessage}`; 
-                    const translated = `Translated Message: ${recievedUsername}: ${recievedTranslation}`; 
+                    const original = `Original Message: ${recievedUsername}: ${recievedMessage}`;
+                    const translated = `Translated Message: ${recievedUsername}: ${recievedTranslation}`;
                     messages.push(original, translated);
                     this.setState({ messages });
                 })

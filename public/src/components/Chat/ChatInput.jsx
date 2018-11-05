@@ -20,7 +20,13 @@ class ChatInput extends React.Component {
 
     handleOnSubmit = (event) => {
         event.preventDefault();
-        axios.post(`/api/message/${this.state.message}/${this.props.user.username}`)
+
+        const payload = {
+            message: this.state.message,
+            username: this.props.user.username ? this.props.user.username : 'test'
+        }
+
+        axios.post('/api/message/', payload)
             .then((response) => {
                 console.log('client side post', response);
             });
