@@ -57,17 +57,21 @@ module.exports = app => {
         return res.json();
     })
 
-    app.post('/api/message/:message/:username', (req, res, next) => {
-        const message = req.params.message;
-        const username = req.params.username;
+    app.post('/api/message/', (req, res, next) => {
+        const message = req.body.message.toString();
+        const username = req.body.username;
 
-        io.emit('chat message', `${username} \n ${message}`);
+        if(username === undefined) {
+            io.emit('chat message', `test \n ${message}`);
+        } else {
+            io.emit('chat message', `${username.toString()} \n ${message}`);
+        }
     });
 
-    app.post('/api/translate/:message/:username/:language', (req, res, next) => {
-        const message = req.params.message;
-        const language = req.params.language;
-        const username = req.params.username;
+    app.post('/api/translate/', (req, res, next) => {
+        const message = req.body.chatMessage.toString();
+        const language = req.body.language.toString();
+        const username = req.body.username.toString();
 
         translate
             .translate(message, language)
