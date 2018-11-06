@@ -10,6 +10,10 @@ import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
 import { setLanguage } from '../../redux/actions/chat/chatAction';
 import Grid from '@material-ui/core/Grid';
+import { ReactMic } from 'react-mic';
+// import RecordRTC from 'recordrtc';
+var RecordRTC = require('recordrtc');
+const StereoAudioRecorder = RecordRTC.StereoAudioRecorder;
 
 const styles = theme => ({
     button: {
@@ -300,6 +304,7 @@ class Recorder extends React.Component {
 
         this.state = {
             language: 'en',
+            record: false
         };
     }
 
@@ -308,67 +313,91 @@ class Recorder extends React.Component {
             [name]: event.target.value,
         });
 
-        if(name === 'language') {
+        if (name === 'language') {
             this.props.setLanguage(event.target.value);
         }
     };
 
-    startRecord = () => {
-        axios.post(`/api/record/${this.props.chat.language}/${this.props.user.username}`)
+    onData(recordedBlob) {
+        console.log('chunk of real-time data is: ', recordedBlob);
+    }
+
+    onStop(recordedBlob) {
+        // axios.post(`/api/record/${this.props.chat.language}/${this.props.user.username}`, recordedBlob)
+        //     .then((response) => {
+        //         console.log('client side post', response);
+        //     })
+        axios.post(`/api/record/en/testing123`, recordedBlob)
             .then((response) => {
                 console.log('client side post', response);
             })
     }
+
+    startRecord = () => {
+        this.setState({
+            record: true
+        });
+    }
+
     endRecord = () => {
-        // this.record.stop;    
+        this.setState({
+            record: false
+        });
     }
 
     render() {
         const { classes } = this.props;
-        
+
         return (
             <Grid >
-                    <Grid item xs={6}>
-                        <Button variant="fab" color="primary" aria-label="Listen" onClick={this.startRecord} >
-                            <Mic />
-                        </Button>
-                        <Button variant="fab" color="secondary" aria-label="Stop" onClick={this.endRecord} >
-                            <MicOff />
-                        </Button>
-                    </Grid>
+                <ReactMic
+                    record={this.state.record}
+                    className="sound-wave"
+                    onStop={this.onStop}
+                    onData={this.onData}
+                    strokeColor="#f5f5f5"
+                    backgroundColor="#3F51B5" />
+                <Grid item xs={6}>
+                    <Button variant="fab" color="primary" aria-label="Listen" onClick={this.startRecord} >
+                        <Mic />
+                    </Button>
+                    <Button variant="fab" color="secondary" aria-label="Stop" onClick={this.endRecord} >
+                        <MicOff />
+                    </Button>
+                </Grid>
 
-                    <Grid item xs={6}>
-                        <div className="col-md-6 mt-3 mb-5">
-                            <form className={classes.container} noValidate autoComplete="off">
-                                <div className='row'>
-                                    <Grid item xs={4} >
-                                        <TextField
-                                            id="standard-select-language"
-                                            select
-                                            label="Language Selector"
-                                            className={classes.textField}
-                                            value={this.state.language}
-                                            onChange={this.handleChange('language')}
-                                            SelectProps={{
-                                                MenuProps: {
-                                                    className: classes.menu,
-                                                },
-                                            }}
-                                            helperText="Please select your language"
-                                            margin="normal"
-                                        >
-                                            {languages.map(option => (
-                                                <MenuItem key={option.value} value={option.value}>
-                                                    {option.label}
-                                                </MenuItem>
-                                            ))}
-                                        </TextField>
-                                    </ Grid>    
-                                </div>    
+                <Grid item xs={6}>
+                    <div className="col-md-6 mt-3 mb-5">
+                        <form className={classes.container} noValidate autoComplete="off">
+                            <div className='row'>
+                                <Grid item xs={4} >
+                                    <TextField
+                                        id="standard-select-language"
+                                        select
+                                        label="Language Selector"
+                                        className={classes.textField}
+                                        value={this.state.language}
+                                        onChange={this.handleChange('language')}
+                                        SelectProps={{
+                                            MenuProps: {
+                                                className: classes.menu,
+                                            },
+                                        }}
+                                        helperText="Please select your language"
+                                        margin="normal"
+                                    >
+                                        {languages.map(option => (
+                                            <MenuItem key={option.value} value={option.value}>
+                                                {option.label}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
+                                </ Grid>
+                            </div>
                         </form>
                     </div>
                 </Grid>
-            </Grid> 
+            </Grid>
         );
     }
 }
