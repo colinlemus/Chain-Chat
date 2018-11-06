@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Send from '@material-ui/icons/Send';
@@ -39,11 +39,11 @@ class ChatInput extends React.Component {
     render() {
 
         return (
-            <div className="row">
+            <Grid item xs={12}>
                 <form noValidate autoComplete="off" onSubmit={this.handleOnSubmit}>
                     <TextField
                         id="standard-full-width"
-                        className='col-sm-8'
+                        className='col-sm-10'
                         label="Chat"
                         value={this.state.message}
                         onChange={this.handleChange('message')}
@@ -54,11 +54,11 @@ class ChatInput extends React.Component {
                             shrink: true,
                         }}
                     />
-                    <Button className='col-sm-4' variant="fab" color="primary" aria-label="Send" onClick={this.handleOnSubmit}>
+                    <Button variant="fab" color="primary" aria-label="Send" onClick={this.handleOnSubmit}>
                         <Send />
                     </Button>
                 </form>
-            </div>
+            </Grid>
         );
     }
 }
