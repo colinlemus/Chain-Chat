@@ -47,7 +47,15 @@ module.exports = (app, passport) => {
     app.get('/confirmation/:token', (req, res) => {
         const { newUser: { id } } = jwt.verify(req.params.token, EMAIL_SECRET);
 
-        db.users.update({ active: true }, { where: { id } });
+        db.users.update({ active: true }, { where: { id } })
+            .then(res => {
+                return res.json({
+                    verified: true
+                });
+            })
+            .catch(err => {
+                return err;
+            });
     });
 
     app.post('/api/forgot', (req, res, next) => {
