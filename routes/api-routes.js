@@ -5,6 +5,7 @@ const record = require('node-record-lpcm16');
 const speech = require('@google-cloud/speech');
 const { Translate } = require('@google-cloud/translate');
 const projectId = 'constant-gecko-219921';
+const FileReader = require('FileReader');
 const translate = new Translate({
     projectId,
 });
@@ -13,6 +14,7 @@ module.exports = app => {
     const io = require('../config/webSockets/socket.js')(app);
 
     app.post('/api/record/:language/:username', (req, res, next) => {
+        console.log(req.body);
         const username = req.params.username;
         const languageCode = req.params.language;
         const client = new speech.SpeechClient();
@@ -27,6 +29,13 @@ module.exports = app => {
             },
             interimResults: false,
         };
+
+        const reader = new FileReader();
+        reader.readAsDataURL(req.body.blobURL);
+        reader.onloadend = function () {
+            base64data = reader.result;
+            console.log(base64data);
+        }
 
         const recognizeStream = client
             .streamingRecognize(request)
@@ -45,7 +54,6 @@ module.exports = app => {
             .start({
                 sampleRateHertz,
                 threshold: 0,
-
                 verbose: false,
                 recordProgram: 'rec', // Try also "arecord" or "sox"
                 silence: '10.0',
@@ -61,7 +69,7 @@ module.exports = app => {
         const message = req.body.message.toString();
         const username = req.body.username;
 
-        if(username === undefined) {
+        if (username === undefined) {
             io.emit('chat message', `test \n ${message}`);
         } else {
             io.emit('chat message', `${username.toString()} \n ${message}`);
