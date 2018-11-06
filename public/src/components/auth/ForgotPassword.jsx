@@ -40,7 +40,7 @@ export default class ForgotPassword extends Component {
                     </div>
                 </div>
                 <div className='row'>
-                    <div className='col-12'>
+                    <div className='col-sm-6 m-auto'>
                         <div className='text-center'>
                             <div className='card'>
                                 <div className='card-header font-weight-bold'>Forgot Password</div>
@@ -50,14 +50,15 @@ export default class ForgotPassword extends Component {
                                             <input type='text' className='form-control' name='username' placeholder='Username' required='required' value={this.state.username} onChange={this.handleInputChange} />
                                         </div>
                                         <div className='form-group'>
-                                            <button type='submit' value="Submit" className='btn btn-primary btn-lg btn-block login-btn'>Request Reset</button>
+                                            <button type='submit' value="Submit" className='btn btn-primary login-btn'>Request Reset</button>
+                                            <button className='btn btn-light ml-3'>
+                                            <Link to='/'>Login</Link>
+                                            </button>
                                         </div>
                                     </form>
                                 </div>
                             </div>
-                            <div className='m-3'>
-                            <Link to='/'>Login</Link>
-                            </div>
+
                         </div>
                     </div>
                 </div>

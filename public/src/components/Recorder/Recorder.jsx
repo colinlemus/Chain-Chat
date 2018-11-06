@@ -349,7 +349,8 @@ class Recorder extends React.Component {
         const { classes } = this.props;
 
         return (
-            <Grid >
+            <Grid container spacing={24}>
+                <Grid item xs={8}>
                 <ReactMic
                     record={this.state.record}
                     className="sound-wave"
@@ -357,7 +358,8 @@ class Recorder extends React.Component {
                     onData={this.onData}
                     strokeColor="#f5f5f5"
                     backgroundColor="#3F51B5" />
-                <Grid item xs={6}>
+                </Grid>                
+                <Grid item xs={2}>
                     <Button variant="fab" color="primary" aria-label="Listen" onClick={this.startRecord} >
                         <Mic />
                     </Button>
@@ -366,7 +368,7 @@ class Recorder extends React.Component {
                     </Button>
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={4}>
                     <div className="col-md-6 mt-3 mb-5">
                         <form className={classes.container} noValidate autoComplete="off">
                             <div className='row'>
@@ -417,4 +419,3 @@ const mapStateToProps = state => ({
 
 
 export default connect(mapStateToProps, { setLanguage })(withStyles(styles)(Recorder));
-

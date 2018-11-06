@@ -56,7 +56,7 @@ class Login extends Component {
                     </div>
                 </div>
                 <div className='row'>
-                    <div className='col-12'>
+                    <div className='col-6 m-auto'>
                         <div className='text-center'>
                             <div className='card'>
                                 <div className='card-header font-weight-bold'>Login</div>
@@ -69,19 +69,20 @@ class Login extends Component {
                                             <input type='password' className='form-control' name='password' placeholder='Password' required='required' value={this.state.password} onChange={this.handleInputChange} />
                                         </div>
                                         <div className='form-group'>
-                                            <input type='text' className='form-control' name='factorAuth' placeholder='2 Factor Authentication' value={this.state.factorAuth} onChange={this.handleInputChange} />
-                                        </div>
-                                        <div className='form-group'>
-                                            <button type='submit' value="Submit" className='btn btn-primary btn-lg btn-block login-btn'>Login</button>
+                                            <button type="button" className='btn btn-light mr-3'>
+                                                <Link to='/register'>Sign up</Link>
+                                            </button>
+                                            <button type="button" className='btn btn-light  mr-3'>
+                                                <Link to='/forgot'>Forgot Password</Link>
+                                            </button>
+                                            <button type='submit' value="Submit" className='btn btn-primary login-btn'>Login</button>
                                         </div>
                                     </form>
                                 </div>
                             </div>
+                            
                             <div className='m-2 p-3'>
-                                <Link to='/register'>Sign up</Link>
-                            </div>
-                            <div className='m-2 p-3'>
-                                <Link to='/forgot'>Forgot Password</Link>
+                                
                             </div>
                         </div>
                     </div>

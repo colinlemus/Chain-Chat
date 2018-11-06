@@ -44,12 +44,12 @@ class Signup extends Component {
         return (
             <div className='container'>
                 <div className='row'>
-                    <div className='col-12 mb-2'>
+                    <div className='col-12'>
                         <img src='./ChainChatLogo.png' class="rounded mx-auto d-block" alt="Responsive" width='722px' height='282px' />
                     </div>
                 </div>
                 <div className='row'>
-                    <div className='col-12 mb-2'>
+                    <div className='col-sm-6 m-auto'>
                         <div className='text-center'>
                             <div className='card'>
                                 <div className='card-header font-weight-bold'>Sign up</div>
@@ -71,16 +71,9 @@ class Signup extends Component {
                                             <input type='text' className='form-control' name='lastName' placeholder='Last Name' required='required' value={this.state.lastName} onChange={this.handleInputChange} />
                                         </div>
                                         <div className='form-group'>
-                                            Please select whether you would like to enable 2 Factor Authentication.
-                                            <select name="factorAuth" value={this.state.factorAuth} onChange={this.handleInputChange}>
-                                                <option value="true">True</option>
-                                                <option value="false">False</option>
-                                            </select>
+                                            <button type='submit' value="Submit" className='btn btn-primary mr-3'>Sign up</button>
+                                            <button className='btn btn-light'><Link to='/'>Login</Link></button>
                                         </div>
-                                        <div className='form-group'>
-                                            <button type='submit' value="Submit" className='btn btn-primary btn-lg btn-block'>Sign up</button>
-                                        </div>
-                                        <Link to='/'>Login</Link>
                                     </form>
                                 </div>
                             </div>
