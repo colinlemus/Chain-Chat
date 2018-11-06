@@ -350,7 +350,7 @@ class Recorder extends React.Component {
 
         return (
             <Grid container spacing={24}>
-                <Grid item xs={8}>
+                <Grid item xs={12}>
                 <ReactMic
                     record={this.state.record}
                     className="sound-wave"
@@ -359,7 +359,7 @@ class Recorder extends React.Component {
                     strokeColor="#f5f5f5"
                     backgroundColor="#3F51B5" />
                 </Grid>                
-                <Grid item xs={2}>
+                <Grid item xs={4} className='mt-3'>
                     <Button variant="fab" color="primary" aria-label="Listen" onClick={this.startRecord} >
                         <Mic />
                     </Button>
@@ -368,11 +368,9 @@ class Recorder extends React.Component {
                     </Button>
                 </Grid>
 
-                <Grid item xs={4}>
-                    <div className="col-md-6 mt-3 mb-5">
+                <Grid item xs={8}>
+                    <div>
                         <form className={classes.container} noValidate autoComplete="off">
-                            <div className='row'>
-                                <Grid item xs={4} >
                                     <TextField
                                         id="standard-select-language"
                                         select
@@ -394,8 +392,6 @@ class Recorder extends React.Component {
                                             </MenuItem>
                                         ))}
                                     </TextField>
-                                </ Grid>
-                            </div>
                         </form>
                     </div>
                 </Grid>
