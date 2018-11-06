@@ -52,7 +52,7 @@ class ForgotPassword extends Component {
                     </div>
                 </div>
                 <div className='row'>
-                    <div className='col-12'>
+                    <div className='col-sm-6 m-auto'>
                         <div className='text-center'>
                             <div className='card'>
                                 <div className='card-header font-weight-bold'>Forgot Password</div>
@@ -62,15 +62,15 @@ class ForgotPassword extends Component {
                                             <input type='text' className='form-control' name='newPassword' placeholder='Password' required='required' value={this.state.newPassword} onChange={this.handleInputChange} />
                                         </div>
                                         <div className='form-group'>
-                                            <input type='text' className='form-control' name='secondPassword' placeholder='Please reenter your password.' required='required' value={this.state.secondPassword} onChange={this.handleInputChange} />
+                                            <input type='text' className='form-control' name='secondPassword' placeholder='Please re-enter your password.' required='required' value={this.state.secondPassword} onChange={this.handleInputChange} />
                                         </div>
                                         <div className='form-group'>
-                                            <button type='submit' value="Submit" className='btn btn-primary btn-lg btn-block login-btn'>Reset Password</button>
+                                            <button type='submit' value="Submit" className='btn btn-primary login-btn'>Reset Password</button>
+                                            <button className='btn btn-light ml-3'><Link to='/'>Login</Link></button>
                                         </div>
                                     </form>
                                 </div>
                             </div>
-                            <Link to='/'>Login</Link>
                         </div>
                     </div>
                 </div>
