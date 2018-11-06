@@ -43,7 +43,7 @@ class ChatInput extends React.Component {
                 <form noValidate autoComplete="off" onSubmit={this.handleOnSubmit}>
                     <TextField
                         id="standard-full-width"
-                        className='col-sm-10 mr-2'
+                        className='col-sm-10'
                         label="Chat"
                         value={this.state.message}
                         onChange={this.handleChange('message')}
