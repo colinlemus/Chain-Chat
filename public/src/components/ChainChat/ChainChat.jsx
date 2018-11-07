@@ -6,11 +6,12 @@ import axios from 'axios';
 class ChainChat extends React.Component {
     handleLogout = () => {
         axios.post('/api/logout')
+            .then(() => {
+                setTimeout(() => {
+                    this.props.history.push('/');
+                }, 1000);
+            })
             .catch(err => console.log(err));
-        setTimeout(() => {
-            this.props.history.push('/');
-            window.location.reload();
-        }, 1000);
     }
 
     render() {
