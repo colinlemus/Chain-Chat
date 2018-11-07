@@ -17,3 +17,8 @@ code {
 #root{
   background-color: whitesmoke
 }
+
+.btn-primary {
+  background: #3F51B5;
+  color: #ffffff;
+}

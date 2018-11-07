@@ -7,6 +7,7 @@ export default class ForgotPassword extends Component {
 
         this.state = {
             username: '',
+            requested: ''
         }
     }
 
@@ -25,6 +26,11 @@ export default class ForgotPassword extends Component {
         }
 
         axios.post('/api/forgot/', payload)
+            .then(() => {
+                this.setState({
+                    requested: 'Your password reset request has been sent, please check your email for further instructions!'
+                })
+            })
             .catch((error) => {
                 console.log(error);
             });
@@ -58,6 +64,7 @@ export default class ForgotPassword extends Component {
                                             </button>
                                             <button type='submit' value="Submit" className='btn btn-primary login-btn ml-3'>Request Reset</button>
                                         </div>
+                                        <div style={{marginTop: '2vh'}}>{this.state.requested}</div>
                                     </form>
                                 </div>
                             </div>
