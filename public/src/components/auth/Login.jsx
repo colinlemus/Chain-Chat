@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchLogin } from '../../redux/actions/auth/authAction';
 
@@ -43,16 +42,21 @@ class Login extends Component {
 
         this.props.fetchLogin(payload);
         setTimeout(() => {
+            this.props.history.push('/chainchat');
             window.location.reload();
         }, 1000);
     }
 
+    handleRedirect = (event) => {
+        this.props.history.push(event.target.name);
+    }
+ 
     render() {
         return (
             <div className='container'>
                 <div className='row'>
                     <div className='col-12'>
-                        <img src='./ChainChatLogo.png' class="rounded mx-auto d-block" alt="Responsive" width='722px' height='282px' />
+                        <img src={require('../../assests/ChainChatLogo.png')} className="rounded mx-auto d-block" alt="Responsive" width='722px' height='282px' />
                     </div>
                 </div>
                 <div className='row'>
@@ -69,20 +73,16 @@ class Login extends Component {
                                             <input type='password' className='form-control' name='password' placeholder='Password' required='required' value={this.state.password} onChange={this.handleInputChange} />
                                         </div>
                                         <div className='form-group'>
-                                            <button type="button" className='btn btn-light mr-3'>
-                                                <Link to='/register'>Sign up</Link>
+                                            <button type="button" className='btn btn-light mr-3' onClick={this.handleRedirect} name='/register'>
+                                                Sign up
                                             </button>
-                                            <button type="button" className='btn btn-light  mr-3'>
-                                                <Link to='/forgot'>Forgot Password</Link>
+                                            <button type="button" className='btn btn-light  mr-3' onClick={this.handleRedirect} name='/forgot'>
+                                                Forgot Password
                                             </button>
                                             <button type='submit' value="Submit" className='btn btn-primary login-btn'>Login</button>
                                         </div>
                                     </form>
                                 </div>
-                            </div>
-                            
-                            <div className='m-2 p-3'>
-                                
                             </div>
                         </div>
                     </div>

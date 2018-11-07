@@ -5,7 +5,6 @@ const record = require('node-record-lpcm16');
 const speech = require('@google-cloud/speech');
 const { Translate } = require('@google-cloud/translate');
 const projectId = 'constant-gecko-219921';
-const FileReader = require('FileReader');
 const translate = new Translate({
     projectId,
 });
@@ -14,7 +13,6 @@ module.exports = app => {
     const io = require('../config/webSockets/socket.js')(app);
 
     app.post('/api/record/:language/:username', (req, res, next) => {
-        console.log(req.body);
         const username = req.params.username;
         const languageCode = req.params.language;
         const client = new speech.SpeechClient();
@@ -29,13 +27,6 @@ module.exports = app => {
             },
             interimResults: false,
         };
-
-        const reader = new FileReader();
-        reader.readAsDataURL(req.body.blobURL);
-        reader.onloadend = function () {
-            base64data = reader.result;
-            console.log(base64data);
-        }
 
         const recognizeStream = client
             .streamingRecognize(request)

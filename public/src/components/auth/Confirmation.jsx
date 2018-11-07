@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 
 export default class Confirmation extends Component {
     constructor(props) {
@@ -12,9 +11,8 @@ export default class Confirmation extends Component {
     }
 
     componentDidMount = () => {
-        const url = window.location.href;
-        console.log(url);
-        axios.get(url).then(res => {
+        const query = url.substr(window.location.href.indexOf('/confirmation/'), (window.location.href.length - 1)).trim();
+        axios.get(query).then(res => {
             this.setState({
                 verified: res.data.verified
             });
@@ -24,14 +22,16 @@ export default class Confirmation extends Component {
     render() {
         if (this.state.verified) {
             return (
-                <div className="row">
-                    <div className="col-sm-6 m-auto">
-                        <div className="card">
-                        <div className="card-body">
-                            <h5 className="card-title">Verification Status</h5>
-                            <p className="card-text">Verified!</p>
-                            <a href="/" className="btn btn-primary">Login</a>
-                        </div>
+                <div className='container'>
+                    <div className="row">
+                        <div className="col-sm-6 m-auto">
+                            <div className="card">
+                                <div className="card-body">
+                                    <h5 className="card-title">Verification Status</h5>
+                                    <p className="card-text">Verified!</p>
+                                    <a href="/" className="btn btn-primary">Login</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -40,14 +40,14 @@ export default class Confirmation extends Component {
 
         return (
             <div className='container'>
-            <div className="row ">
+                <div className="row ">
                     <div className="col-sm-6 m-auto">
                         <div className="card">
-                        <div className="card-body">
-                            <h5 className="card-title">Verification Status</h5>
-                            <p className="card-text">Not verified!</p>
-                            <a href="/" className="btn btn-primary">Login</a>
-                        </div>
+                            <div className="card-body">
+                                <h5 className="card-title">Verification Status</h5>
+                                <p className="card-text">Not verified!</p>
+                                <a href="/" className="btn btn-primary">Login</a>
+                            </div>
                         </div>
                     </div>
                 </div>

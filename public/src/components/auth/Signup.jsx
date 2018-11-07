@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 
 class Signup extends Component {
     constructor(props) {
@@ -12,7 +11,6 @@ class Signup extends Component {
             email: '',
             firstName: '',
             lastName: '',
-            factorAuth: ''
         }
     }
 
@@ -31,7 +29,6 @@ class Signup extends Component {
             email: this.state.email,
             username: this.state.username,
             password: this.state.password,
-            factorAuth: this.state.factorAuth
         }
 
         axios.post('/api/signup/', payload)
@@ -40,12 +37,16 @@ class Signup extends Component {
             });
     }
 
+    handleRedirect = (event) => {
+        this.props.history.push(event.target.name);
+    }
+
     render() {
         return (
             <div className='container'>
                 <div className='row'>
                     <div className='col-12'>
-                        <img src='./ChainChatLogo.png' class="rounded mx-auto d-block" alt="Responsive" width='722px' height='282px' />
+                        <img src={require('../../assests/ChainChatLogo.png')} class="rounded mx-auto d-block" alt="Responsive" width='722px' height='282px' />
                     </div>
                 </div>
                 <div className='row'>
@@ -70,9 +71,9 @@ class Signup extends Component {
                                         <div className='form-group'>
                                             <input type='text' className='form-control' name='lastName' placeholder='Last Name' required='required' value={this.state.lastName} onChange={this.handleInputChange} />
                                         </div>
-                                        <div className='form-group'>
-                                            <button type='submit' value="Submit" className='btn btn-primary mr-3'>Sign up</button>
-                                            <button className='btn btn-light'><Link to='/'>Login</Link></button>
+                                        <div>
+                                            <button className='btn btn-light mr-3' onClick={this.handleRedirect} name='/'>Login</button>
+                                            <button type='submit' value="Submit" className='btn btn-primary'>Sign up</button>
                                         </div>
                                     </form>
                                 </div>

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 export default class ForgotPassword extends Component {
@@ -31,12 +30,16 @@ export default class ForgotPassword extends Component {
             });
     }
 
+    handleRedirect = (event) => {
+        this.props.history.push(event.target.name);
+    }
+
     render() {
         return (
             <div className='container'>
                 <div className='row'>
                     <div className='col-12 mb-3'>
-                        <img src='./ChainChatLogo.png' class="rounded mx-auto d-block" alt="Responsive" width='722px' height='282px' />
+                        <img src={require('../../assests/ChainChatLogo.png')} class="rounded mx-auto d-block" alt="Responsive" width='722px' height='282px' />
                     </div>
                 </div>
                 <div className='row'>
@@ -50,15 +53,14 @@ export default class ForgotPassword extends Component {
                                             <input type='text' className='form-control' name='username' placeholder='Username' required='required' value={this.state.username} onChange={this.handleInputChange} />
                                         </div>
                                         <div className='form-group'>
-                                            <button type='submit' value="Submit" className='btn btn-primary login-btn'>Request Reset</button>
-                                            <button className='btn btn-light ml-3'>
-                                            <Link to='/'>Login</Link>
+                                            <button className='btn btn-light' onClick={this.handleRedirect} name='/'>
+                                                Login
                                             </button>
+                                            <button type='submit' value="Submit" className='btn btn-primary login-btn ml-3'>Request Reset</button>
                                         </div>
                                     </form>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
