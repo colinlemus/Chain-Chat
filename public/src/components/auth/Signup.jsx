@@ -11,6 +11,7 @@ class Signup extends Component {
             email: '',
             firstName: '',
             lastName: '',
+            signed: ''
         }
     }
 
@@ -32,6 +33,15 @@ class Signup extends Component {
         }
 
         axios.post('/api/signup/', payload)
+            .then(() => {
+                this.setState({
+                    signed: 'An email has been sent to your newly created account, you will be redirected shortly!'
+                });
+
+                setTimeout(() => {
+                    this.props.history.push('/');
+                }, 5000);
+            })
             .catch((error) => {
                 console.log(error);
             });
@@ -60,7 +70,7 @@ class Signup extends Component {
                                             <input type='text' className='form-control' name='username' placeholder='Username' required='required' value={this.state.username} onChange={this.handleInputChange} />
                                         </div>
                                         <div className='form-group'>
-                                            <input type='text' className='form-control' name='password' placeholder='Password' required='required' value={this.state.password} onChange={this.handleInputChange} />
+                                            <input type='password' className='form-control' name='password' placeholder='Password' required='required' value={this.state.password} onChange={this.handleInputChange} />
                                         </div>
                                         <div className='form-group'>
                                             <input type='text' className='form-control' name='email' placeholder='Email' required='required' value={this.state.email} onChange={this.handleInputChange} />
@@ -75,6 +85,7 @@ class Signup extends Component {
                                             <button className='btn btn-light mr-3' onClick={this.handleRedirect} name='/'>Login</button>
                                             <button type='submit' value="Submit" className='btn btn-primary'>Sign up</button>
                                         </div>
+                                        <div style={{marginTop: '2vh'}}>{this.state.signed}</div>
                                     </form>
                                 </div>
                             </div>

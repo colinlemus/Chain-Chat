@@ -10,6 +10,8 @@ import ForgotPassword from './components/auth/ForgotPassword';
 import ForgotPassword2 from './components/auth/ForgotPassword2';
 import Chainchat from './components/ChainChat/ChainChat.jsx';
 import Confirmation from './components/auth/Confirmation';
+import FailedConfirmation from './components/auth/FailedConfirmation';
+import ErrorAuth from './components/auth/ErrorAuth';
 
 class App extends Component {
     componentWillMount = () => {
@@ -50,8 +52,10 @@ class App extends Component {
                     {this.createRoute(false, 'exact', '/forgot', ForgotPassword)}
                     {this.createRoute(false, 'exact', '/change', ForgotPassword2)}
                     {this.createRoute(false, 'path', '/forgot')}
-                    {this.createRoute(false, 'path', '/confirmation', Confirmation)}
-                    {this.createRoute(false, 'exact', '/chainchat', Chainchat, '/')}
+                    {this.createRoute(false, 'exact', '/failedConfirmation', FailedConfirmation)}
+                    {this.createRoute(false, 'exact', '/autherror', ErrorAuth)}
+                    {this.createRoute(false, 'exact', '/confirmed', Confirmation)}
+                    {this.createRoute(true, 'exact', '/chainchat', Chainchat, '/')}
                     {this.createRoute(false, 'path', '/assests')}
                     {this.createRoute(false, 'path', '*', Event404)}
                 </Switch>

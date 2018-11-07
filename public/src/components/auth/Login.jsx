@@ -10,20 +10,7 @@ class Login extends Component {
         this.state = {
             username: '',
             password: '',
-            factorAuth: ''
         }
-    }
-
-    handleFactorAuth = (factorAuth) => {
-        if (factorAuth) {
-            return (
-                <span>true</span>
-            );
-        }
-
-        return (
-            <span>false</span>
-        );
     }
 
     handleInputChange = (event) => {
@@ -43,7 +30,6 @@ class Login extends Component {
         this.props.fetchLogin(payload);
         setTimeout(() => {
             this.props.history.push('/chainchat');
-            window.location.reload();
         }, 1000);
     }
 

@@ -44,17 +44,26 @@ module.exports = (app, passport) => {
         }
     });
 
+    app.post('/api/logout', (req, res) => {
+        req.session.user = {}
+
+        req.session.save((err) => {
+            if (err) {
+                return res.redirect('../autherror');
+            }
+        });
+    });
+
     app.get('/confirmation/:token', (req, res) => {
         const { newUser: { id } } = jwt.verify(req.params.token, EMAIL_SECRET);
 
         db.users.update({ active: true }, { where: { id } })
-            .then(res => {
-                return res.json({
-                    verified: true
-                });
+            .then(() => {
+                return res.redirect('../confirmed');
             })
             .catch(err => {
-                return err;
+                console.log(err);
+                return res.redirect('../failedConfirmation');              
             });
     });
 
@@ -110,8 +119,7 @@ module.exports = (app, passport) => {
 
             req.session.save((err) => {
                 if (err) {
-                    console.log(err);
-                    return;
+                    return res.redirect('../autherror');
                 }
 
                 return res.redirect('../');
@@ -126,8 +134,7 @@ module.exports = (app, passport) => {
         req.session.user = user;
         req.session.save((err) => {
             if (err) {
-                console.log(err);
-                return;
+                return res.redirect('../autherror');
             }
 
             return res.redirect('../change');

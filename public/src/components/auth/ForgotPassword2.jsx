@@ -11,7 +11,9 @@ class ForgotPassword extends Component {
 
         this.state = {
             newPassword: '',
-            secondPassword: ''
+            secondPassword: '',
+            changed: '',
+            match: ''
         }
     }
 
@@ -29,7 +31,9 @@ class ForgotPassword extends Component {
         event.preventDefault();
 
         if (this.state.newPassword !== this.state.secondPassword) {
-            console.log('Passwords do not match');
+            this.setState({
+                match: 'These two passwords do not match, please enter the same passwords'
+            });
             return;
         }
 
@@ -38,9 +42,23 @@ class ForgotPassword extends Component {
         }
 
         axios.post('/api/newPass/', payload)
+            .then(() => {
+                this.setState({
+                    changed: 'Your password has been successfully changed, you will be redirected shortly!',
+                    match: ''
+                });
+
+                setTimeout(() => {
+                    this.props.history.push('/');
+                }, 5000);
+            })
             .catch((error) => {
                 console.log(error);
             });
+    }
+
+    handleRedirect = (event) => {
+        this.props.history.push(event.target.name);
     }
 
     render() {
@@ -59,15 +77,19 @@ class ForgotPassword extends Component {
                                 <div className='card-body'>
                                     <form onSubmit={this.handleSubmit}>
                                         <div className='form-group'>
-                                            <input type='text' className='form-control' name='newPassword' placeholder='Password' required='required' value={this.state.newPassword} onChange={this.handleInputChange} />
+                                            <input type='password' className='form-control' name='newPassword' placeholder='Password' required='required' value={this.state.newPassword} onChange={this.handleInputChange} />
                                         </div>
                                         <div className='form-group'>
-                                            <input type='text' className='form-control' name='secondPassword' placeholder='Please re-enter your password.' required='required' value={this.state.secondPassword} onChange={this.handleInputChange} />
+                                            <input type='password' className='form-control' name='secondPassword' placeholder='Please re-enter your password.' required='required' value={this.state.secondPassword} onChange={this.handleInputChange} />
                                         </div>
                                         <div className='form-group'>
-                                            <button type='submit' value="Submit" className='btn btn-primary login-btn'>Reset Password</button>
-                                            <button className='btn btn-light ml-3'><Link to='/'>Login</Link></button>
+                                            <button className='btn btn-light' onClick={this.handleRedirect} name='/'>
+                                                Login
+                                            </button>
+                                            <button type='submit' value="Submit" className='btn btn-primary login-btn ml-3'>Reset Password</button>
                                         </div>
+                                        <div style={{ marginTop: '2vh' }}>{this.state.changed}</div>
+                                        <div style={{ marginTop: '2vh' }}>{this.state.match}</div>
                                     </form>
                                 </div>
                             </div>

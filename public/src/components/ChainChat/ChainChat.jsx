@@ -1,8 +1,18 @@
 import React from 'react';
 import Chat from '../Chat/Chat';
 import Recorder from '../Recorder/Recorder.jsx';
+import axios from 'axios';
 
 class ChainChat extends React.Component {
+    handleLogout = () => {
+        axios.post('/api/logout')
+            .catch(err => console.log(err));
+        setTimeout(() => {
+            this.props.history.push('/');
+            window.location.reload();
+        }, 1000);
+    }
+
     render() {
         return (
             <div className="container">
@@ -13,7 +23,7 @@ class ChainChat extends React.Component {
                 </div>
                 <div className='row'>
                     <div className='col-sm-12 m-auto d-flex justify-content-end'>
-                    <button href="/" className="btn btn-danger"> Logout! </button>
+                        <button href="/" className="btn btn-danger" onClick={this.handleLogout}> Logout! </button>
                     </div>
                 </div>
                 <Chat />
