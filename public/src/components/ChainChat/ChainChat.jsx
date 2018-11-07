@@ -11,6 +11,11 @@ class ChainChat extends React.Component {
                         <img src={require('../../assests/ChainChatLogo.png')} className="rounded mx-auto d-block" alt="Responsive" width='722px' height='282px' />
                     </div>
                 </div>
+                <div className='row'>
+                    <div className='col-sm-12 m-auto d-flex justify-content-end'>
+                    <button href="/" className="btn btn-danger"> Logout! </button>
+                    </div>
+                </div>
                 <Chat />
                 <div className="row">
                     <div className="col-sm-6 pt-3 mt-4 mb-4">
