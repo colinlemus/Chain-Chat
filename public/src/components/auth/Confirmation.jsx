@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 
 export default class Confirmation extends Component {
     constructor(props) {
@@ -12,9 +11,8 @@ export default class Confirmation extends Component {
     }
 
     componentDidMount = () => {
-        const url = window.location.href;
-        console.log(url);
-        axios.get(url).then(res => {
+        const query = url.substr(window.location.href.indexOf('/confirmation/'), (window.location.href.length - 1)).trim();
+        axios.get(query).then(res => {
             this.setState({
                 verified: res.data.verified
             });
@@ -27,7 +25,7 @@ export default class Confirmation extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-sm-12 mb-3">
-                            <img src='./ChainChatLogo.png' className="rounded mx-auto d-block" alt="Responsive" width='722px' height='282px' />
+                            <img src={require('../../assests/ChainChatLogo.png')} className="rounded mx-auto d-block" alt="Responsive" width='722px' height='282px' />
                         </div>
                     </div>
                     <div className="row">
@@ -51,7 +49,7 @@ export default class Confirmation extends Component {
             <div className="container">
                     <div className="row">
                         <div className="col-sm-12 mb-3">
-                            <img src='./ChainChatLogo.png' className="rounded mx-auto d-block" alt="Responsive" width='722px' height='282px' />
+                            <img src={require('../../assests/ChainChatLogo.png')} className="rounded mx-auto d-block" alt="Responsive" width='722px' height='282px' />
                         </div>
                     </div>
                     <div className="row">

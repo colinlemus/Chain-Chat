@@ -51,7 +51,8 @@ class App extends Component {
                     {this.createRoute(false, 'exact', '/change', ForgotPassword2)}
                     {this.createRoute(false, 'path', '/forgot')}
                     {this.createRoute(false, 'path', '/confirmation', Confirmation)}
-                    {this.createRoute(false, 'exact', '/chainchat', Chainchat)}
+                    {this.createRoute(false, 'exact', '/chainchat', Chainchat, '/')}
+                    {this.createRoute(false, 'path', '/assests')}
                     {this.createRoute(false, 'path', '*', Event404)}
                 </Switch>
             </BrowserRouter>
