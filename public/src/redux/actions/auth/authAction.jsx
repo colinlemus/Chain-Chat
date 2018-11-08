@@ -2,7 +2,7 @@ export const FETCH_LOGIN_USER = 'FETCH_LOGIN_USER';
 export const FETCH_SESSION_DATA = 'FETCH_SESSION_DATA';
 export const FETCH_FORGOT_SESSION = 'FETCH_FORGOT_SESSION';
 
-export const fetchLogin = (payload) => dispatch => {
+export const fetchLogin = (payload, history) => dispatch => {
     fetch('/api/login', {
         method: 'POST',
         headers: {
@@ -17,6 +17,9 @@ export const fetchLogin = (payload) => dispatch => {
                 type: FETCH_LOGIN_USER,
                 payload: data.token[0]
             })
+        })
+        .then(() => {
+            window.location.reload();
         }).catch(err => {
             console.log(err);
         });
