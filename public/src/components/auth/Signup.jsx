@@ -25,7 +25,7 @@ class Signup extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
 
-        if (this.state.username.length >= 6) {
+        if (this.state.username.length >= 11) {
             this.setState({
                 usernameLength: 'Please keep your username between 1 - 10 characters.'
             });

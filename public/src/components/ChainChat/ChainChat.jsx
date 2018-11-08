@@ -9,8 +9,10 @@ class ChainChat extends React.Component {
             .catch(err => console.log(err));
         setTimeout(() => {
             this.props.history.push('/');
-            window.location.reload();
         }, 1000);
+        setTimeout(() => {
+            window.location.reload();
+        }, 1250);
     }
 
     render() {
