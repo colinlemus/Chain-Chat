@@ -320,16 +320,23 @@ class Recorder extends React.Component {
     }
 
     onStop(recordedBlob) {
-        axios.post(`/api/record/${this.props.chat.language}/${this.props.user.username}`, recordedBlob)
-            .then((response) => {
-                console.log('client side post', response);
-            })
+        console.log('ending');
     }
 
     startRecord = () => {
         this.setState({
             record: true
         });
+
+        const payload = {
+            language: this.props.chat.language,
+            username: this.props.user.username
+        }
+
+        axios.post('/api/record', payload)
+            .then((response) => {
+                console.log('client side post', response);
+            })
     }
 
     endRecord = () => {

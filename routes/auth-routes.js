@@ -51,6 +51,8 @@ module.exports = (app, passport) => {
             if (err) {
                 return res.redirect('../autherror');
             }
+
+            return res.redirect('../');
         });
     });
 

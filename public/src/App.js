@@ -14,9 +14,24 @@ import FailedConfirmation from './components/auth/FailedConfirmation';
 import ErrorAuth from './components/auth/ErrorAuth';
 
 class App extends Component {
-    componentWillMount = () => {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            loading: true
+        }
+    }
+    componentDidMount = () => {
         this.props.initializeSession();
         this.props.initializeForgotSession();
+        if(!this.props.user.active) {
+            setTimeout(() =>{
+                console.log(this.props.user.active);
+                this.setState({
+                    loading: false
+                })
+            }, 1000);
+        }
     }
 
     createRoute = (requireAuth, pathType, route, component, reroute) => {
@@ -44,23 +59,47 @@ class App extends Component {
     }
 
     render() {
-        return (
-            <BrowserRouter>
-                <Switch>
-                    {this.createRoute(false, 'exact', '/', Login)}
-                    {this.createRoute(false, 'exact', '/register', Signup)}
-                    {this.createRoute(false, 'exact', '/forgot', ForgotPassword)}
-                    {this.createRoute(false, 'exact', '/change', ForgotPassword2)}
-                    {this.createRoute(false, 'path', '/forgot')}
-                    {this.createRoute(false, 'exact', '/failedConfirmation', FailedConfirmation)}
-                    {this.createRoute(false, 'exact', '/autherror', ErrorAuth)}
-                    {this.createRoute(false, 'exact', '/confirmed', Confirmation)}
-                    {this.createRoute(true, 'exact', '/chainchat', Chainchat, '/')}
-                    {this.createRoute(false, 'path', '/assests')}
-                    {this.createRoute(false, 'path', '*', Event404)}
-                </Switch>
-            </BrowserRouter>
-        )
+        if (this.state.loading) {
+            return (
+                <div className="container">
+                    <div className="row">
+                        <div className="col-sm-12 mb-3">
+                            <img src={require('./assests/ChainChatLogo.png')} className="rounded mx-auto d-block" alt="Responsive" width='722px' height='282px' />
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-sm-6 m-auto">
+                            <div className="card">
+                                <div class="card-header text-center font-weight-bold">
+                                    Loading Web Page
+                                </div>
+                                <div className="card-body text-center">
+                                    <p className="card-text">Currently loading...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        } else {
+            return (
+                <BrowserRouter>
+                    <Switch>
+                        {this.createRoute(false, 'exact', '/', Login)}
+                        {this.createRoute(false, 'exact', '/register', Signup)}
+                        {this.createRoute(false, 'exact', '/forgot', ForgotPassword)}
+                        {this.createRoute(false, 'exact', '/change', ForgotPassword2)}
+                        {this.createRoute(false, 'path', '/forgot')}
+                        {this.createRoute(false, 'exact', '/failedConfirmation', FailedConfirmation)}
+                        {this.createRoute(false, 'exact', '/autherror', ErrorAuth)}
+                        {this.createRoute(false, 'exact', '/confirmed', Confirmation)}
+                        {this.createRoute(true, 'exact', '/chainchat', Chainchat, '/')}
+                        {this.createRoute(false, 'path', '/assests')}
+                        {this.createRoute(false, 'path', '*', Event404)}
+                    </Switch>
+                </BrowserRouter>
+            )
+        }
     }
 }
 

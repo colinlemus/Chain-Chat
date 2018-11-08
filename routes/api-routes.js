@@ -12,9 +12,10 @@ const translate = new Translate({
 module.exports = app => {
     const io = require('../config/webSockets/socket.js')(app);
 
-    app.post('/api/record/:language/:username', (req, res, next) => {
-        const username = req.params.username;
-        const languageCode = req.params.language;
+    app.post('/api/record/', (req, res, next) => {
+        console.log(req.body);
+        const username = req.body.username;
+        const languageCode = req.body.language;
         const client = new speech.SpeechClient();
         const encoding = 'LINEAR16';
         const sampleRateHertz = 16000;

@@ -11,7 +11,8 @@ class Signup extends Component {
             email: '',
             firstName: '',
             lastName: '',
-            signed: ''
+            signed: '',
+            usernameLength: ''
         }
     }
 
@@ -24,6 +25,14 @@ class Signup extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
 
+        if (this.state.username.length >= 11) {
+            this.setState({
+                usernameLength: 'Please keep your username between 1 - 10 characters.'
+            });
+
+            return;
+        }
+
         const payload = {
             firstName: this.state.firstName,
             lastName: this.state.lastName,
@@ -35,7 +44,8 @@ class Signup extends Component {
         axios.post('/api/signup/', payload)
             .then(() => {
                 this.setState({
-                    signed: 'An email has been sent to your newly created account, you will be redirected shortly!'
+                    signed: 'An email has been sent to your newly created account, you will be redirected shortly!',
+                    usernameLength: ''
                 });
 
                 setTimeout(() => {
@@ -85,7 +95,8 @@ class Signup extends Component {
                                             <button className='btn btn-light mr-3' onClick={this.handleRedirect} name='/'>Login</button>
                                             <button type='submit' value="Submit" className='btn btn-primary'>Sign up</button>
                                         </div>
-                                        <div style={{marginTop: '2vh'}}>{this.state.signed}</div>
+                                        <div style={{ marginTop: '2vh' }}>{this.state.signed}</div>
+                                        <div style={{ marginTop: '2vh' }}>{this.state.usernameLength}</div>
                                     </form>
                                 </div>
                             </div>
