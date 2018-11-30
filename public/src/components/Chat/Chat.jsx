@@ -4,7 +4,7 @@ import ChatInput from './ChatInput';
 import openSocket from 'socket.io-client';
 import Grid from '@material-ui/core/Grid'
 
-const socket = openSocket('https://chainchat.colinlem.us:8081');
+const socket = openSocket('http://localhost:8081');
 
 class Chat extends React.Component {
     render() {

@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 export default class Confirmation extends Component {
+    handleRedirect = (event) => {
+        this.props.history.push(event.target.name);
+    }
+
     render() {
         return (
             <div className="container">
@@ -18,7 +22,7 @@ export default class Confirmation extends Component {
                             </div>
                             <div className="card-body text-center">
                                 <p className="card-text">Error on authentication. Please contact support.</p>
-                                <a href="/" className="btn btn-primary">Login</a>
+                                <button className="btn btn-primary" name='/' onClick={this.handleRedirect}>Login</button>
                             </div>
                         </div>
                     </div>
