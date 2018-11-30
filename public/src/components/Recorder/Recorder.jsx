@@ -324,6 +324,10 @@ class Recorder extends React.Component {
     }
 
     startRecord = () => {
+        if(this.state.record) {
+            return; 
+        }
+        
         this.setState({
             record: true
         });
