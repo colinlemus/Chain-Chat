@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { initializeForgotSession } from '../../redux/actions/auth/authAction';
 
-class ForgotPassword extends Component {
+class NewPassword extends Component {
     constructor(props) {
         super(props);
 
@@ -101,7 +100,7 @@ class ForgotPassword extends Component {
     }
 }
 
-ForgotPassword.prototypes = {
+NewPassword.prototypes = {
     initializeForgotSession: PropTypes.func.isRequired,
     user: PropTypes.object,
 };
@@ -110,4 +109,4 @@ const mapStateToProps = state => ({
     user: state.user
 });
 
-export default connect(mapStateToProps, { initializeForgotSession })(ForgotPassword);
+export default connect(mapStateToProps, { initializeForgotSession })(NewPassword);

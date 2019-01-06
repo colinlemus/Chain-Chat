@@ -7,6 +7,11 @@ import Grid from '@material-ui/core/Grid'
 const socket = openSocket('http://localhost:8081');
 
 class Chat extends React.Component {
+
+    componentDidMount = () => {
+        socket.on()
+    }
+
     render() {
         return (
             <Grid container spacing={24}>
