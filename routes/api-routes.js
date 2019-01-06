@@ -47,7 +47,7 @@ module.exports = app => {
                 sampleRateHertz,
                 threshold: 0,
                 verbose: false,
-                recordProgram: 'rec', // Try also "arecord" or "sox"
+                recordProgram: 'rec',
                 silence: '10.0',
             })
             .on('error', console.error)

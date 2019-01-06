@@ -108,16 +108,7 @@ module.exports = (app, passport) => {
         }).then(user => {
             db.users.update({ password: generatedHashPassword }, { where: { id: user.id } });
 
-            req.session.user = {
-                id: user.id,
-                username: user.username,
-                password: user.password,
-                email: user.email,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                factorAuth: user.factorAuth,
-                active: user.active
-            };
+            req.session.user = user;
 
             req.session.save((err) => {
                 if (err) {
@@ -167,5 +158,4 @@ module.exports = (app, passport) => {
             });
         })(req, res, next);
     });
-
 }

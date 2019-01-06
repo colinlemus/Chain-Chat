@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { initializeSession, initializeForgotSession } from './redux/actions/auth/authAction';
 import ForgotPassword from './components/auth/ForgotPassword';
-import ForgotPassword2 from './components/auth/ForgotPassword2';
+import NewPassword from './components/auth/NewPassword';
 import Chainchat from './components/ChainChat/ChainChat.jsx';
 import Confirmation from './components/auth/Confirmation';
 import FailedConfirmation from './components/auth/FailedConfirmation';
@@ -88,7 +88,7 @@ class App extends Component {
                         {this.createRoute(false, 'exact', '/', Login)}
                         {this.createRoute(false, 'exact', '/register', Signup)}
                         {this.createRoute(false, 'exact', '/forgot', ForgotPassword)}
-                        {this.createRoute(false, 'exact', '/change', ForgotPassword2)}
+                        {this.createRoute(false, 'exact', '/change', NewPassword)}
                         {this.createRoute(false, 'path', '/forgot')}
                         {this.createRoute(false, 'exact', '/failedConfirmation', FailedConfirmation)}
                         {this.createRoute(false, 'exact', '/autherror', ErrorAuth)}
